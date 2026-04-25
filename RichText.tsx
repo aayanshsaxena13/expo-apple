@@ -46,19 +46,30 @@ export function Paragraph({ color, alignment, children, margin }: { color?: any,
 }
 
 export function StatusCode({ code, alignment, children, margin }: { code?: any, alignment?: any, children?: any, margin?: number }) {
+    // iOS uses specific hex values for system colors (Red, Green, Orange)
+    const isDanger = code === "danger";
+    const isGood = code === "good";
+
+    const textColor = isDanger ? "#FF3B30" : isGood ? "#34C759" : "#FF9500";
+    // Apple style: 12-15% opacity background of the same color
+    const backgroundColor = isDanger ? "rgba(255, 59, 48, 0.12)" : isGood ? "rgba(52, 199, 89, 0.12)" : "rgba(255, 149, 0, 0.12)";
+
     return (
         <Text style={{
-            color: code === "danger" ? "rgb(255, 0, 0)" : code === "good" ? "rgb(0, 150, 64)" : "rgb(255, 174, 0)",
-            fontSize: dim.width < 420 ? 20 : 24,
-            fontWeight: 700,
+            color: textColor,
+            backgroundColor: backgroundColor,
+            // Native iOS Typography: Semi-bold with tight letter spacing
+            fontSize: dim.width < 420 ? 15 : 17,
+            fontWeight: "600",
+            letterSpacing: -0.4,
             textAlign: alignment,
             margin: margin,
-            backgroundColor: code === "danger" ? "rgb(255, 176, 173)" : code === "good" ? "rgb(176, 255, 173)" : "rgb(255, 255, 132)",
-            padding: dim.width < 420 ? 12 : 16,
-            borderRadius: dim.width < 420 ? 8 : 12,
+            // Native Pill Shape: High padding and oversized border radius
+            paddingHorizontal: dim.width < 420 ? 10 : 14,
+            paddingVertical: dim.width < 420 ? 4 : 6,
+            borderRadius: 100, 
+            overflow: "hidden", 
             alignSelf: alignment ? alignment : "center",
-            borderBottomWidth: 2,
-            borderColor: code === "danger" ? "rgb(255, 0, 0)" : code === "good" ? "rgb(0, 150, 64)" : "rgb(255, 174, 0)",
         }}>
             {children}
         </Text>

@@ -15,7 +15,7 @@ export function Button(props: {
             alignSelf: props.alignment,
             margin: props.margin,
             backgroundColor: props.color,
-            padding: dim.width < 420 ? 8: 12,
+            padding: dim.width < 420 ? 8 : 12,
             borderRadius: dim.width < 420 ? 12 : 24,
             overflow: "hidden",
             width: dim.width < 420 ? 120 : 180,
