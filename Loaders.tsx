@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react"
-import { View, StyleSheet, Animated, Easing, ViewStyle, StyleProp, Dimensions } from "react-native"
+import { View, StyleSheet, Animated, Easing, ViewStyle, StyleProp } from "react-native"
 import Svg, { Circle } from "react-native-svg"
-
-const dim = Dimensions.get("window");
 
 type BaseProps = {
   progress: number // 0 → 1

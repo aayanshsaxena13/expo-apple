@@ -10,11 +10,11 @@ export default function Bubble({ children, margin, alignment, color }: { childre
             alignSelf: alignment,
             margin: margin,
             backgroundColor: color ? color : themes.blue.primary,
-            paddingHorizontal: dim.width < 420 ? 8 : 12,
-            paddingVertical: dim.width < 420 ? 6 : 8,
-            borderTopRightRadius: dim.width < 420 ? 16 : 24,
-            borderBottomLeftRadius: dim.width < 420 ? 16 : 24,
-            borderBottomRightRadius: dim.width < 420 ? 16 : 24,
+            paddingHorizontal: dim.width < 450 ? 8 : 12,
+            paddingVertical: dim.width < 450 ? 6 : 8,
+            borderTopRightRadius: dim.width < 450 ? 16 : 24,
+            borderBottomLeftRadius: dim.width < 450 ? 16 : 24,
+            borderBottomRightRadius: dim.width < 450 ? 16 : 24,
         }}>
             <Paragraph>{children}</Paragraph>
         </View>

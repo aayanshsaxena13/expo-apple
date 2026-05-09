@@ -8,7 +8,7 @@ export function LinkView({ color, href, children, alignment, margin }: { color?:
         <Link style={{
             color: color ? color : "rgb(63, 146, 255)",
             textAlign: alignment,
-            fontSize: dim.width < 420 ? 20 : 24,
+            fontSize: dim.width < 450 ? 20 : 24,
             fontWeight: 700,
             margin: margin,
         }} href={href}>
@@ -19,9 +19,9 @@ export function LinkView({ color, href, children, alignment, margin }: { color?:
 
 export function Header({ color, alignment, children, margin }: { color?: any, alignment?: any, children?: string, margin?: number }) {
     return (
-        <Text style={{ 
+        <Text style={{
             color: color ? color : "rgb(255, 255, 255)",
-            fontSize: dim.width < 420 ? 28 : 36,
+            fontSize: dim.width < 450 ? 28 : 36,
             fontWeight: 800,
             textAlign: alignment,
             margin: margin,
@@ -33,9 +33,9 @@ export function Header({ color, alignment, children, margin }: { color?: any, al
 
 export function Paragraph({ color, alignment, children, margin }: { color?: any, alignment?: any, children?: any, margin?: number }) {
     return (
-        <Text style={{ 
+        <Text style={{
             color: color ? color : "rgb(255, 255, 255)",
-            fontSize: dim.width < 420 ? 20 : 24,
+            fontSize: dim.width < 450 ? 20 : 24,
             fontWeight: 700,
             textAlign: alignment,
             margin: margin,
@@ -59,16 +59,16 @@ export function StatusCode({ code, alignment, children, margin }: { code?: any, 
             color: textColor,
             backgroundColor: backgroundColor,
             // Native iOS Typography: Semi-bold with tight letter spacing
-            fontSize: dim.width < 420 ? 15 : 17,
+            fontSize: dim.width < 450 ? 15 : 17,
             fontWeight: "600",
             letterSpacing: -0.4,
             textAlign: alignment,
             margin: margin,
             // Native Pill Shape: High padding and oversized border radius
-            paddingHorizontal: dim.width < 420 ? 10 : 14,
-            paddingVertical: dim.width < 420 ? 4 : 6,
-            borderRadius: 100, 
-            overflow: "hidden", 
+            paddingHorizontal: dim.width < 450 ? 10 : 14,
+            paddingVertical: dim.width < 450 ? 4 : 6,
+            borderRadius: 100,
+            overflow: "hidden",
             alignSelf: alignment ? alignment : "center",
         }}>
             {children}
