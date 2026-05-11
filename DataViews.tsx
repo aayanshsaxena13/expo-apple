@@ -25,6 +25,8 @@ export function List<ITEM>({ data, renderItem, alignment, margin }: ListProps<IT
             borderBottomRightRadius: index == data.length - 1 ? 16 : 0,
             borderBottomWidth: index != data.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
             borderColor: "rgb(134, 134, 134)",
+            margin,
+            alignSelf: alignment
           }}
         >
           {renderItem?.(item)}
