@@ -11,7 +11,7 @@ export default function Bubble({ children, margin, alignment, color }: { childre
             margin: margin,
             backgroundColor: color ? color : themes.blue.primary,
             paddingHorizontal: dim.width < 450 ? 12 : 20,
-            paddingVertical: dim.width < 450 ? 8 : 16,
+            paddingVertical: dim.width < 450 ? 8 : 12,
             borderTopRightRadius: dim.width < 450 ? 16 : 24,
             borderBottomLeftRadius: dim.width < 450 ? 16 : 24,
             borderBottomRightRadius: dim.width < 450 ? 16 : 24,
