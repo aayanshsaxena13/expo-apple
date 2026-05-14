@@ -2,7 +2,7 @@ import { Animated, Dimensions, Pressable, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRef } from "react";
 import NativeSlider from "@react-native-community/slider";
-import { themes } from "@/constants/themes";
+import { themes } from "./constants/themes";
 
 const dim = Dimensions.get("window");
 

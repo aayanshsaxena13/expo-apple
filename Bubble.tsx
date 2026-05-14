@@ -1,6 +1,6 @@
 import { Dimensions, View } from "react-native";
 import { Paragraph } from "./RichText";
-import { themes } from "@/constants/themes";
+import { themes } from "./constants/themes";
 
 const dim = Dimensions.get("window");
 
