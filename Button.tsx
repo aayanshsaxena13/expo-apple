@@ -1,7 +1,7 @@
 import { Dimensions, TouchableHighlight } from "react-native";
 import { Paragraph } from "./RichText";
 
-export function Button(props: {
+export default function Button(props: {
     onPress?: () => void;
     children?: string;
     color?: string;
