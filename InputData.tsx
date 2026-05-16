@@ -6,7 +6,7 @@ import { themes } from "./constants/themes";
 
 const dim = Dimensions.get("window");
 
-export function TextField({ placeholder, alignment, color, secondaryColor, role, value, onChange, margin }: { alignment?: any, color?: any, role?: boolean, value?: string, onChange?: any, margin?: any, placeholder?: string, secondaryColor?: any }) {
+export function TextField({ placeholder, alignment, color, secondaryColor, security, value, onChange, margin }: { alignment?: any, color?: any, security?: boolean, value?: string, onChange?: any, margin?: any, placeholder?: string, secondaryColor?: any }) {
   return (
     <TextInput
       placeholder={placeholder}
@@ -27,7 +27,7 @@ export function TextField({ placeholder, alignment, color, secondaryColor, role,
         fontSize: dim.width < 450 ? 20 : 24,
         overflow: "hidden",
       }}
-      secureTextEntry={role}
+      secureTextEntry={security}
     />
   );
 }
