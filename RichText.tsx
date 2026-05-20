@@ -51,27 +51,8 @@ export function StatusCode({ code, alignment, children, margin }: { code?: any, 
     const isGood = code === "good";
 
     const textColor = isDanger ? "#FF3B30" : isGood ? "#34C759" : "#FF9500";
-    // Apple style: 12-15% opacity background of the same color
-    const backgroundColor = isDanger ? "rgba(255, 59, 48, 0.12)" : isGood ? "rgba(52, 199, 89, 0.12)" : "rgba(255, 149, 0, 0.12)";
 
     return (
-        <Text style={{
-            color: textColor,
-            backgroundColor: backgroundColor,
-            // Native iOS Typography: Semi-bold with tight letter spacing
-            fontSize: dim.width < 450 ? 15 : 17,
-            fontWeight: "600",
-            letterSpacing: -0.4,
-            textAlign: alignment,
-            margin: margin,
-            // Native Pill Shape: High padding and oversized border radius
-            paddingHorizontal: dim.width < 450 ? 10 : 14,
-            paddingVertical: dim.width < 450 ? 4 : 6,
-            borderRadius: 100,
-            overflow: "hidden",
-            alignSelf: alignment ? alignment : "center",
-        }}>
-            {children}
-        </Text>
+        <Paragraph color={textColor} alignment={alignment} margin={margin}>{children}</Paragraph>
     );
 }
