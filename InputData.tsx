@@ -25,7 +25,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
         width: dim.width < 450 ? 280 : 320,
         fontSize: dim.width < 450 ? 20 : 24,
         overflow: "hidden",
-        borderRadius: dim.width < 450 ? 12 : 24,
+        borderRadius: dim.width < 450 ? 12 : 16,
       }}
       secureTextEntry={security}
     />
