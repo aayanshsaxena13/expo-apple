@@ -1,11 +1,11 @@
 import { Dimensions, FlexAlignType, Pressable, Animated } from "react-native";
 import { Paragraph } from "./RichText";
-import { useRef } from "react";
+import { JSX, useRef } from "react";
 import { GlassView } from "expo-glass-effect";
 
 const dim = Dimensions.get("window");
 
-export default function Button(props: {
+export function Button(props: {
     onPress?: () => void;
     children?: string;
     color?: string;
@@ -47,7 +47,7 @@ export default function Button(props: {
 
 export function GlassButton(props: {
     onPress?: () => void;
-    children?: string;
+    children?: JSX.Element;
     margin?: number;
     alignment?: FlexAlignType;
 }) {
@@ -80,7 +80,7 @@ export function GlassButton(props: {
                 width: dim.width < 450 ? 120 : 180,
             }} glassEffectStyle={"regular"}>
                 <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
-                    <Paragraph alignment="center">{props.children}</Paragraph>
+                    {props.children}
                 </Pressable>
             </GlassView>
         </Animated.View>
