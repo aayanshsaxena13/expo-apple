@@ -7,7 +7,7 @@ import { Paragraph } from "./RichText";
 
 const dim = Dimensions.get("window");
 
-export function TextField({ placeholder, alignment, color, secondaryColor, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string, secondaryColor?: string }) {
+export function TextField({ placeholder, alignment, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
   return (
     <TextInput
       placeholder={placeholder}
@@ -19,14 +19,13 @@ export function TextField({ placeholder, alignment, color, secondaryColor, secur
         fontWeight: 700,
         padding: dim.width < 450 ? 8 : 12,
         margin: margin,
-        backgroundColor: "rgba(59, 59, 59, 0.7)",
-        borderTopRightRadius: 8,
-        borderTopLeftRadius: 8,
+        borderColor: "rgba(59, 59, 59, 0.5)",
+        backgroundColor: "transparent",
+        borderWidth: dim.width < 450 ? 1.6 : 3.2,
         width: dim.width < 450 ? 280 : 320,
-        borderBottomWidth: dim.width < 450 ? 2 : 4,
-        borderColor: secondaryColor ? secondaryColor : themes.neutral.secondary,
         fontSize: dim.width < 450 ? 20 : 24,
         overflow: "hidden",
+        borderRadius: dim.width < 450 ? 12 : 24,
       }}
       secureTextEntry={security}
     />
