@@ -8,14 +8,16 @@ import {
   Pressable,
 } from 'react-native';
 import { themes } from './constants/themes';
-import { Header, Paragraph } from './RichText';
+import { Paragraph } from './RichText';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 
 interface Props {
   visible: boolean;
   setVisible: (visible: boolean) => void;
   setDay: (day: number) => void;
   setMonth: (month: string) => void;
+  setYear: (year: number) => void;
 }
 
 const dim = Dimensions.get("window");
@@ -25,16 +27,18 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-export default function Calendar({
+export default function DatePicker({
   visible,
   setVisible,
   setDay,
   setMonth,
+  setYear
 }: Props) {
   const currentYear = new Date().getFullYear();
   const [selectedMonth, setSelectedMonth] = useState<string>(MONTHS[new Date().getMonth()]);
   const [selectedDay, setSelectedDay] = useState<number>(new Date().getDate());
-  const [currentDay, setCurrentDay] = useState<number>(selectedDay);
+  const [currentDay, _] = useState<number>(selectedDay);
+  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
 
   const getDaysInMonth = (month: string, year: number): number[] => {
     const monthIndex = MONTHS.indexOf(month);
@@ -48,13 +52,13 @@ export default function Calendar({
     return days;
   };
 
-  const daysGrid = getDaysInMonth(selectedMonth, currentYear);
+  const daysGrid = getDaysInMonth(selectedMonth, selectedYear);
 
   const updateMonthAndValidateDay = (newMonth: string) => {
     setSelectedMonth(newMonth);
     setMonth(newMonth);
 
-    const validDays = getDaysInMonth(newMonth, currentYear);
+    const validDays = getDaysInMonth(newMonth, selectedYear);
     const maxValidDay = validDays[validDays.length - 1];
 
     if (selectedDay > maxValidDay) {
@@ -66,6 +70,7 @@ export default function Calendar({
   useEffect(() => {
     setDay(selectedDay);
     setMonth(selectedMonth);
+    setYear(selectedYear);
   }, []);
 
   return (
@@ -99,26 +104,36 @@ export default function Calendar({
           <View style={{
             flexDirection: "row"
           }}>
-            <Header margin={20} color={"white"} alignment={"left"}>{selectedMonth}</Header>
+            <Paragraph margin={20} color={"white"} alignment={"left"}>{selectedMonth} {`${selectedYear}`}</Paragraph>
 
             <View style={{ flexDirection: "row", margin: 20 }}>
               <TouchableOpacity style={{
                 margin: 8,
               }} onPress={() => {
                 const key = MONTHS.findIndex((month) => month === selectedMonth) - 1;
-                const newMonth = MONTHS[key >= 0 ? key : 11];
-                updateMonthAndValidateDay(newMonth);
+                if (key >= 0) {
+                  updateMonthAndValidateDay(MONTHS[key]);
+                } else {
+                  updateMonthAndValidateDay(MONTHS[11]);
+                  setSelectedYear(selectedYear - 1);
+                  setYear(selectedYear - 1);
+                }
               }}>
-                <Paragraph color={themes.blue.primary}>{`<`}</Paragraph>
+                <Ionicons name="chevron-back-outline" color={themes.blue.primary} size={dim.width < 450 ? 20 : 24} />
               </TouchableOpacity>
               <TouchableOpacity style={{
                 margin: 8,
               }} onPress={() => {
                 const key = MONTHS.findIndex((month) => month === selectedMonth) + 1;
-                const newMonth = MONTHS[key <= 11 ? key : 0];
-                updateMonthAndValidateDay(newMonth);
+                if (key <= 11) {
+                  updateMonthAndValidateDay(MONTHS[key]);
+                } else {
+                  updateMonthAndValidateDay(MONTHS[0]);
+                  setSelectedYear(selectedYear + 1);
+                  setYear(selectedYear + 1);
+                }
               }}>
-                <Paragraph color={themes.blue.primary}>{`>`}</Paragraph>
+                <Ionicons name="chevron-forward-outline" color={themes.blue.primary} size={dim.width < 450 ? 20 : 24} />
               </TouchableOpacity>
             </View>
           </View>
