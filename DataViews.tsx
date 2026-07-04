@@ -8,11 +8,12 @@ type ListProps<ITEM> = {
   renderItem: (i: ITEM) => ReactNode;
   alignment?: FlexAlignType;
   margin?: number;
+  color?: string;
 };
 
 const dim = Dimensions.get("window");
 
-export function List<ITEM extends Object>({ data, renderItem, alignment, margin }: ListProps<ITEM>) {
+export function List<ITEM extends Object>({ data, renderItem, alignment, margin, color }: ListProps<ITEM>) {
   if (!data) return;
   return (
     <FlatList
@@ -26,7 +27,7 @@ export function List<ITEM extends Object>({ data, renderItem, alignment, margin 
       renderItem={({ item, index }) => (
         <View
           style={{
-            backgroundColor: "rgba(16, 16, 16, 0.9)",
+            backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
             padding: dim.width < 450 ? 12 : 16,
             borderTopLeftRadius: index == 0 ? 16 : 0,
             borderTopRightRadius: index == 0 ? 16 : 0,
@@ -42,7 +43,7 @@ export function List<ITEM extends Object>({ data, renderItem, alignment, margin 
   );
 };
 
-export function Table<T extends Object>({ data, margin, alignment }: { data: T[], margin?: number, alignment?: FlexAlignType }) {
+export function Table<T extends Object>({ data, margin, alignment, color }: { data: T[], margin?: number, alignment?: FlexAlignType; color?: string; }) {
   if (data?.length === 0) return;
   const keys = Object.keys(data[0]);
   return (
@@ -50,7 +51,7 @@ export function Table<T extends Object>({ data, margin, alignment }: { data: T[]
       margin,
       alignSelf: alignment,
       flexDirection: "column",
-      backgroundColor: "rgba(16, 16, 16, 0.9)",
+      backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
       borderRadius: 16
     }}>
       <View style={{ flexDirection: "row" }}>
