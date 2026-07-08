@@ -21,19 +21,19 @@ export function LinearProgress({
   trackColor = "rgba(255,255,255,0.2)",
   style
 }: LinearProps) {
-  const animated = useRef(new Animated.Value(0)).current
+  const animated = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.spring(animated, {
       toValue: progress,
       useNativeDriver: false
     }).start()
-  }, [progress])
+  }, [progress]);
 
   const width = animated.interpolate({
     inputRange: [0, 1],
     outputRange: ["0%", "100%"]
-  })
+  });
 
   return (
     <View style={[styles.linearContainer, { height, backgroundColor: trackColor }, style]}>
@@ -62,10 +62,10 @@ export function CircularProgress({
   trackColor = "rgba(255,255,255,0.2)",
   style
 }: CircularProps) {
-  const animated = useRef(new Animated.Value(0)).current
+  const animated = useRef(new Animated.Value(0)).current;
 
-  const radius = (size - strokeWidth) / 2
-  const circumference = 2 * Math.PI * radius
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
     Animated.spring(animated, {
@@ -77,7 +77,7 @@ export function CircularProgress({
   const strokeDashoffset = animated.interpolate({
     inputRange: [0, 1],
     outputRange: [circumference, 0]
-  })
+  });
 
   return (
     <View style={style}>
@@ -116,7 +116,7 @@ export function CircularProgress({
 // 🔧 Animated SVG Circle
 //////////////////////////////////////////////////////////
 
-const AnimatedCircle = Animated.createAnimatedComponent(Circle)
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 //////////////////////////////////////////////////////////
 // 🎨 Styles
@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 999,
     alignSelf: "center",
-    margin: 8
-  }
-})
+    margin: 8,
+  },
+});
