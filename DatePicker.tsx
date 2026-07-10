@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 import {
   Modal,
-  TouchableOpacity,
   View,
+  Text,
+  Pressable,
+  TouchableOpacity,
   Button,
   Dimensions,
-  Pressable,
-} from 'react-native';
-import { themes } from './constants/themes';
-import { Paragraph } from './RichText';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { themes } from "./constants/themes";
 
 interface Props {
   visible: boolean;
@@ -20,52 +20,53 @@ interface Props {
   setYear: (year: number) => void;
 }
 
-const dim = Dimensions.get("window");
-
 const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
+
+const WEEKDAYS = [
+  "SUN",
+  "MON",
+  "TUE",
+  "WED",
+  "THU",
+  "FRI",
+  "SAT",
+];
+
+const dim = Dimensions.get("window");
 
 export default function DatePicker({
   visible,
   setVisible,
   setDay,
   setMonth,
-  setYear
+  setYear,
 }: Props) {
-  const currentYear = new Date().getFullYear();
-  const [selectedMonth, setSelectedMonth] = useState<string>(MONTHS[new Date().getMonth()]);
-  const [selectedDay, setSelectedDay] = useState<number>(new Date().getDate());
-  const [currentDay, _] = useState<number>(selectedDay);
-  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
+  const today = new Date();
 
-  const getDaysInMonth = (month: string, year: number): number[] => {
-    const monthIndex = MONTHS.indexOf(month);
-    const lastDay = new Date(year, monthIndex + 1, 0).getDate();
-    const days = [];
+  const [selectedMonth, setSelectedMonth] = useState(
+    MONTHS[today.getMonth()]
+  );
 
-    for (let day = 1; day <= lastDay; day++) {
-      days.push(day);
-    }
+  const [selectedYear, setSelectedYear] = useState(
+    today.getFullYear()
+  );
 
-    return days;
-  };
-
-  const daysGrid = getDaysInMonth(selectedMonth, selectedYear);
-
-  const updateMonthAndValidateDay = (newMonth: string) => {
-    setSelectedMonth(newMonth);
-    setMonth(newMonth);
-
-    const validDays = getDaysInMonth(newMonth, selectedYear);
-    const maxValidDay = validDays[validDays.length - 1];
-
-    if (selectedDay > maxValidDay) {
-      setSelectedDay(maxValidDay);
-      setDay(maxValidDay);
-    }
-  };
+  const [selectedDay, setSelectedDay] = useState(
+    today.getDate()
+  );
 
   useEffect(() => {
     setDay(selectedDay);
@@ -73,96 +74,287 @@ export default function DatePicker({
     setYear(selectedYear);
   }, []);
 
+  function getDaysInMonth(month: number, year: number) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  function getFirstWeekday(month: number, year: number) {
+    return new Date(year, month, 1).getDay();
+  }
+
+  function goPreviousMonth() {
+    const monthIndex = MONTHS.indexOf(selectedMonth);
+
+    if (monthIndex === 0) {
+      setSelectedMonth(MONTHS[11]);
+      setSelectedYear((y) => y - 1);
+    } else {
+      setSelectedMonth(MONTHS[monthIndex - 1]);
+    }
+  }
+
+  function goNextMonth() {
+    const monthIndex = MONTHS.indexOf(selectedMonth);
+
+    if (monthIndex === 11) {
+      setSelectedMonth(MONTHS[0]);
+      setSelectedYear((y) => y + 1);
+    } else {
+      setSelectedMonth(MONTHS[monthIndex + 1]);
+    }
+  }
+
+  useEffect(() => {
+    const monthIndex = MONTHS.indexOf(selectedMonth);
+
+    const maxDay = getDaysInMonth(
+      monthIndex,
+      selectedYear
+    );
+
+    if (selectedDay > maxDay) {
+      setSelectedDay(maxDay);
+      setDay(maxDay);
+    }
+
+    setMonth(selectedMonth);
+    setYear(selectedYear);
+  }, [selectedMonth, selectedYear]);
+
+  const calendar = useMemo(() => {
+    const monthIndex = MONTHS.indexOf(selectedMonth);
+
+    const totalDays = getDaysInMonth(
+      monthIndex,
+      selectedYear
+    );
+
+    const firstWeekday = getFirstWeekday(
+      monthIndex,
+      selectedYear
+    );
+
+    const cells: (number | null)[] = [];
+
+    for (let i = 0; i < firstWeekday; i++) {
+      cells.push(null);
+    }
+
+    for (let i = 1; i <= totalDays; i++) {
+      cells.push(i);
+    }
+
+    while (cells.length < 42) {
+      cells.push(null);
+    }
+
+    console.log(
+      selectedMonth,
+      new Date(
+        selectedYear,
+        MONTHS.indexOf(selectedMonth),
+        1
+      ).getDay()
+    );
+
+    return cells;
+  }, [selectedMonth, selectedYear]);
+
   return (
     <Modal
       visible={visible}
       transparent
-      animationType='fade'>
-      <SafeAreaView style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        {/* This is the main card */}
-        <View style={{
-          margin: 20,
-          backgroundColor: 'rgba(16, 16, 16, 0.95)',
-          borderRadius: 16,
-          padding: 12,
-          alignItems: 'center',
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 12,
-          elevation: 4,
-          width: dim.width < 450 ? 360 : 420,
-        }}>
-          {/* Top month change bar */}
-          <View style={{
-            flexDirection: "row"
-          }}>
-            <Paragraph margin={20} color={"white"} alignment={"left"}>{selectedMonth} {`${selectedYear}`}</Paragraph>
+      animationType="fade"
+      statusBarTranslucent
+    >
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(0,0,0,0.28)",
+        }}
+      >
+        <View
+          style={{
+            width: dim.width < 450 ? 280 : 320,
+            backgroundColor: "#1C1C1E",
+            borderRadius: 20,
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            paddingBottom: 16,
+            height: 420,
+            shadowColor: "#000",
+            shadowOpacity: 0.12,
+            shadowRadius: 24,
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 18,
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontSize: 28,
+                fontWeight: "600",
+              }}
+            >
+              {selectedMonth} {selectedYear}
+            </Text>
 
-            <View style={{ flexDirection: "row", margin: 20 }}>
-              <TouchableOpacity style={{
-                margin: 8,
-              }} onPress={() => {
-                const key = MONTHS.findIndex((month) => month === selectedMonth) - 1;
-                if (key >= 0) {
-                  updateMonthAndValidateDay(MONTHS[key]);
-                } else {
-                  updateMonthAndValidateDay(MONTHS[11]);
-                  setSelectedYear(selectedYear - 1);
-                  setYear(selectedYear - 1);
-                }
-              }}>
-                <Ionicons name="chevron-back-outline" color={themes.blue.primary} size={dim.width < 450 ? 20 : 24} />
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <TouchableOpacity
+                onPress={goPreviousMonth}
+                style={{
+                  width: 44,
+                  height: 44,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={22}
+                  color={themes.blue.primary}
+                />
               </TouchableOpacity>
-              <TouchableOpacity style={{
-                margin: 8,
-              }} onPress={() => {
-                const key = MONTHS.findIndex((month) => month === selectedMonth) + 1;
-                if (key <= 11) {
-                  updateMonthAndValidateDay(MONTHS[key]);
-                } else {
-                  updateMonthAndValidateDay(MONTHS[0]);
-                  setSelectedYear(selectedYear + 1);
-                  setYear(selectedYear + 1);
-                }
-              }}>
-                <Ionicons name="chevron-forward-outline" color={themes.blue.primary} size={dim.width < 450 ? 20 : 24} />
+
+              <TouchableOpacity
+                onPress={goNextMonth}
+                style={{
+                  width: 44,
+                  height: 44,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons
+                  name="chevron-forward"
+                  size={22}
+                  color={themes.blue.primary}
+                />
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Days grid */}
-          <View style={{
-            flexWrap: "wrap",
-            flexDirection: "row",
-          }}>
-            {daysGrid.map((day, index) => (
-              <Pressable style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 12,
-                margin: 8,
-                width: dim.width < 450 ? 50 : 60,
-                borderRadius: 50,
-                backgroundColor: selectedDay !== day ? "rgba(61, 61, 61, 0)" : "#0058d22f",
-              }} key={index} onPress={() => {
-                setSelectedDay(day);
-                setDay(day);
-              }}>
-                <Paragraph color={selectedDay !== day ? currentDay !== day ? "white" : themes.blue.primary : themes.blue.primary}>{day}</Paragraph>
-              </Pressable>
+          <View
+            style={{
+              flexDirection: "row",
+              marginBottom: 8,
+            }}
+          >
+            {WEEKDAYS.map((weekday) => (
+              <View
+                key={weekday}
+                style={{
+                  width: `${100 / 7}%`,
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#8E8E93",
+                    fontSize: 12,
+                    fontWeight: "600",
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {weekday}
+                </Text>
+              </View>
             ))}
           </View>
 
-          {/* Bottom done button */}
-          <Button title='Done' onPress={() => setVisible(false)} color={themes.red.primary} />
+          {/* Calendar grid starts here */}
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            {calendar.map((day, index) => {
+              if (day === null) {
+                return (
+                  <View
+                    key={`empty-${index}`}
+                    style={{
+                      width: `${100 / 7}%`,
+                      height: 44,
+                    }}
+                  />
+                );
+              }
+
+              const isToday =
+                day === today.getDate() &&
+                selectedMonth === MONTHS[today.getMonth()] &&
+                selectedYear === today.getFullYear();
+
+              const isSelected = selectedDay === day;
+
+              return (
+                <View
+                  key={`${selectedMonth}-${selectedYear}-${day}`}
+                  style={{
+                    width: `${100 / 7}%`,
+                    height: 44,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Pressable
+                    onPress={() => {
+                      setSelectedDay(day);
+                      setDay(day);
+                    }}
+                    android_ripple={null}
+                    style={({ pressed }) => ({
+                      width: 40,
+                      height: 40,
+                      borderRadius: 18,
+                      justifyContent: "center",
+                      alignItems: "center",
+
+                      backgroundColor: isSelected
+                        ? "#003366"
+                        : "transparent",
+
+                      opacity: pressed ? 0.55 : 1,
+                    })}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: isSelected ? "600" : "400",
+                        color: isSelected
+                          ? themes.blue.primary
+                          : isToday
+                            ? themes.blue.primary
+                            : "#FFFFFF",
+                      }}
+                    >
+                      {day}
+                    </Text>
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+
+          <Button title="Done" onPress={() => setVisible(false)} />
         </View>
       </SafeAreaView>
     </Modal>
