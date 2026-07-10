@@ -148,15 +148,6 @@ export default function DatePicker({
       cells.push(null);
     }
 
-    console.log(
-      selectedMonth,
-      new Date(
-        selectedYear,
-        MONTHS.indexOf(selectedMonth),
-        1
-      ).getDay()
-    );
-
     return cells;
   }, [selectedMonth, selectedYear]);
 
