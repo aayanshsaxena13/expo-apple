@@ -6,7 +6,6 @@ import {
   Button,
   Dimensions,
   Pressable,
-  Text,
 } from 'react-native';
 import { themes } from './constants/themes';
 import { Paragraph } from './RichText';
@@ -27,8 +26,6 @@ const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
-
-const WEEKDAYS = ["M", "T", "W", "TH", "F", "SA", "SU"];
 
 export default function DatePicker({
   visible,
