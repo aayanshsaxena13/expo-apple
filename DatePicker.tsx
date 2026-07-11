@@ -169,7 +169,7 @@ export default function DatePicker({
         <View
           style={{
             width: dim.width < 450 ? 280 : 320,
-            backgroundColor: "#1C1C1E",
+            backgroundColor: "#1c1c1e21",
             borderRadius: 20,
             paddingHorizontal: 20,
             paddingTop: 20,
@@ -345,7 +345,7 @@ export default function DatePicker({
             })}
           </View>
 
-          <Button title="Done" onPress={() => setVisible(false)} />
+          <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
         </View>
       </SafeAreaView>
     </Modal>
