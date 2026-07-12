@@ -41,7 +41,6 @@ export default function Picker(props: {
                 <GlassView style={{
                     padding: dim.width < 450 ? 12 : 18,
                     borderRadius: dim.width < 450 ? 24 : 36,
-                    margin: 20,
                 }} glassEffectStyle={"regular"}>
                     <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={() => setVisible(true)}>
                         <Ionicons size={dim.width < 450 ? 24 : 36} name="chevron-expand-outline" color={themes.blue.primary} />
