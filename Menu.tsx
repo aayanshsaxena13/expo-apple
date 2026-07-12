@@ -1,5 +1,5 @@
 // IMPORT STATEMENTS...
-import { ActivityIndicator, Button, Modal, Pressable } from "react-native";
+import { ActivityIndicator, Button, Modal, Pressable, View } from "react-native";
 import { List } from "./DataViews";
 import { Paragraph } from "./RichText";
 import { themes } from "./constants/themes";
@@ -26,14 +26,19 @@ export default function Menu({
         <Modal visible={visible} transparent={true} animationType="fade">
             <SafeAreaView style={{
                 justifyContent: "center",
-                alignItems: "center",
+                alignContent: "center",
+                flex: 1
             }}>
-                {!isLoading ? <List data={options} renderItem={(i: string) => (
-                    <Pressable onPress={() => setOption(i)}>
-                        <Paragraph color={"white"} alignment={"left"}>{i}</Paragraph>
-                    </Pressable>
-                )} /> : <ActivityIndicator size={"large"} color={themes.green.primary} />}
-                <Button title="Done" color={themes.red.primary} onPress={() => setVisible(false)} />
+                <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                    {!isLoading ? <List data={options} renderItem={(i: string) => (
+                        <Pressable style={({ pressed }) => [{
+                            backgroundColor: !pressed ? "transparent" : "rgba(255, 255, 255, 0.03)",
+                        }]} onPress={() => setOption(i)}>
+                            <Paragraph color={"white"} alignment={"left"}>{i}</Paragraph>
+                        </Pressable>
+                    )} /> : <ActivityIndicator size={"large"} color={themes.green.primary} />}
+                    <Button title="Done" color={themes.red.primary} onPress={() => setVisible(false)} />
+                </View>
             </SafeAreaView>
         </Modal>
     );
