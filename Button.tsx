@@ -1,4 +1,4 @@
-import { Dimensions, FlexAlignType, Pressable, Animated } from "react-native";
+import { Dimensions, FlexAlignType, Pressable, Animated, Platform } from "react-native";
 import { Paragraph } from "./RichText";
 import { JSX, useRef } from "react";
 import { GlassView } from "expo-glass-effect";
@@ -69,20 +69,24 @@ export function GlassButton(props: {
     });
 
     return (
-        <Animated.View style={{
-            transform: [{ scale: scale }],
-        }}>
-            <GlassView style={{
-                padding: dim.width < 450 ? 8 : 12,
-                margin: props.margin,
-                alignSelf: props.alignment,
-                borderRadius: dim.width < 450 ? 16 : 24,
-                width: dim.width < 450 ? 120 : 180,
-            }} glassEffectStyle={"regular"}>
-                <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
-                    {props.children}
-                </Pressable>
-            </GlassView>
-        </Animated.View>
+        <>
+            {Platform.OS === "ios" &&
+                <Animated.View style={{
+                    transform: [{ scale: scale }],
+                }}>
+                    <GlassView style={{
+                        padding: dim.width < 450 ? 8 : 12,
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        borderRadius: dim.width < 450 ? 16 : 24,
+                        width: dim.width < 450 ? 120 : 180,
+                    }} glassEffectStyle={"regular"}>
+                        <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
+                            {props.children}
+                        </Pressable>
+                    </GlassView>
+                </Animated.View>
+            }
+        </>
     )
 }

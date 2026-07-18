@@ -1,4 +1,4 @@
-import { Animated, Dimensions, FlexAlignType, Pressable, View } from "react-native";
+import { Animated, Dimensions, FlexAlignType, Platform, Pressable, View } from "react-native";
 import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
@@ -31,24 +31,28 @@ export default function Picker(props: {
     }
 
     return (
-        <View style={{
-            margin: props.margin,
-            alignSelf: props.alignment,
-        }}>
-            <Animated.View style={{
-                transform: [{ scale: scale }],
-            }}>
-                <GlassView style={{
-                    padding: dim.width < 450 ? 12 : 18,
-                    borderRadius: dim.width < 450 ? 24 : 36,
-                }} glassEffectStyle={"regular"}>
-                    <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={() => setVisible(true)}>
-                        <Ionicons size={dim.width < 450 ? 24 : 36} name="chevron-expand-outline" color={themes.blue.primary} />
-                    </Pressable>
-                </GlassView>
-            </Animated.View>
+        <>
+            {Platform.OS === "ios" &&
+                <View style={{
+                    margin: props.margin,
+                    alignSelf: props.alignment,
+                }}>
+                    <Animated.View style={{
+                        transform: [{ scale: scale }],
+                    }}>
+                        <GlassView style={{
+                            padding: dim.width < 450 ? 12 : 18,
+                            borderRadius: dim.width < 450 ? 24 : 36,
+                        }} glassEffectStyle={"regular"}>
+                            <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={() => setVisible(true)}>
+                                <Ionicons size={dim.width < 450 ? 24 : 36} name="chevron-expand-outline" color={themes.blue.primary} />
+                            </Pressable>
+                        </GlassView>
+                    </Animated.View>
 
-            <Menu options={props.options} visible={visible} setOption={props.setOption} setVisible={setVisible} />
-        </View>
+                    <Menu options={props.options} visible={visible} setOption={props.setOption} setVisible={setVisible} />
+                </View>
+            }
+        </>
     )
 }

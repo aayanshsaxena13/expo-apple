@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Button,
   Dimensions,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
+import { GlassView } from "expo-glass-effect";
 
 interface Props {
   visible: boolean;
@@ -152,202 +154,205 @@ export default function DatePicker({
   }, [selectedMonth, selectedYear]);
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      statusBarTranslucent
-    >
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.28)",
-        }}
-      >
-        <View
-          style={{
-            width: dim.width < 450 ? 280 : 320,
-            backgroundColor: "#1c1c1e21",
-            borderRadius: 20,
-            paddingHorizontal: 20,
-            paddingTop: 20,
-            paddingBottom: 16,
-            height: 420,
-            shadowColor: "#000",
-            shadowOpacity: 0.12,
-            shadowRadius: 24,
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
-          }}
+    <>
+      {Platform.OS === "ios" &&
+        <Modal
+          visible={visible}
+          transparent
+          animationType="fade"
+          statusBarTranslucent
         >
-          <View
+          <SafeAreaView
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flex: 1,
+              justifyContent: "center",
               alignItems: "center",
-              marginBottom: 18,
             }}
           >
-            <Text
+            <GlassView
               style={{
-                color: "white",
-                fontSize: 28,
-                fontWeight: "600",
+                width: dim.width < 450 ? 280 : 320,
+                backgroundColor: "#1c1c1e21",
+                borderRadius: 20,
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 16,
+                height: 420,
+                shadowColor: "#000",
+                shadowOpacity: 0.12,
+                shadowRadius: 24,
+                shadowOffset: {
+                  width: 0,
+                  height: 10,
+                },
               }}
             >
-              {selectedMonth} {selectedYear}
-            </Text>
-
-            <View
-              style={{
-                flexDirection: "row",
-              }}
-            >
-              <TouchableOpacity
-                onPress={goPreviousMonth}
-                style={{
-                  width: 44,
-                  height: 44,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="chevron-back"
-                  size={22}
-                  color={themes.blue.primary}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={goNextMonth}
-                style={{
-                  width: 44,
-                  height: 44,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="chevron-forward"
-                  size={22}
-                  color={themes.blue.primary}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: 8,
-            }}
-          >
-            {WEEKDAYS.map((weekday) => (
               <View
-                key={weekday}
                 style={{
-                  width: `${100 / 7}%`,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                   alignItems: "center",
+                  marginBottom: 18,
                 }}
               >
                 <Text
                   style={{
-                    color: "#8E8E93",
-                    fontSize: 12,
+                    color: "white",
+                    fontSize: 28,
                     fontWeight: "600",
-                    letterSpacing: 0.5,
                   }}
                 >
-                  {weekday}
+                  {selectedMonth} {selectedYear}
                 </Text>
-              </View>
-            ))}
-          </View>
 
-          {/* Calendar grid starts here */}
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-          >
-            {calendar.map((day, index) => {
-              if (day === null) {
-                return (
-                  <View
-                    key={`empty-${index}`}
-                    style={{
-                      width: `${100 / 7}%`,
-                      height: 44,
-                    }}
-                  />
-                );
-              }
-
-              const isToday =
-                day === today.getDate() &&
-                selectedMonth === MONTHS[today.getMonth()] &&
-                selectedYear === today.getFullYear();
-
-              const isSelected = selectedDay === day;
-
-              return (
                 <View
-                  key={`${selectedMonth}-${selectedYear}-${day}`}
                   style={{
-                    width: `${100 / 7}%`,
-                    height: 44,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    flexDirection: "row",
                   }}
                 >
-                  <Pressable
-                    onPress={() => {
-                      setSelectedDay(day);
-                      setDay(day);
-                    }}
-                    android_ripple={null}
-                    style={({ pressed }) => ({
-                      width: 40,
-                      height: 40,
-                      borderRadius: 18,
+                  <TouchableOpacity
+                    onPress={goPreviousMonth}
+                    style={{
+                      width: 44,
+                      height: 44,
                       justifyContent: "center",
                       alignItems: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="chevron-back"
+                      size={22}
+                      color={themes.blue.primary}
+                    />
+                  </TouchableOpacity>
 
-                      backgroundColor: isSelected
-                        ? "#003366"
-                        : "transparent",
+                  <TouchableOpacity
+                    onPress={goNextMonth}
+                    style={{
+                      width: 44,
+                      height: 44,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons
+                      name="chevron-forward"
+                      size={22}
+                      color={themes.blue.primary}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-                      opacity: pressed ? 0.55 : 1,
-                    })}
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 8,
+                }}
+              >
+                {WEEKDAYS.map((weekday) => (
+                  <View
+                    key={weekday}
+                    style={{
+                      width: `${100 / 7}%`,
+                      alignItems: "center",
+                    }}
                   >
                     <Text
                       style={{
-                        fontSize: 20,
-                        fontWeight: isSelected ? "600" : "400",
-                        color: isSelected
-                          ? themes.blue.primary
-                          : isToday
-                            ? themes.blue.primary
-                            : "#FFFFFF",
+                        color: "#8E8E93",
+                        fontSize: 12,
+                        fontWeight: "600",
+                        letterSpacing: 0.5,
                       }}
                     >
-                      {day}
+                      {weekday}
                     </Text>
-                  </Pressable>
-                </View>
-              );
-            })}
-          </View>
+                  </View>
+                ))}
+              </View>
 
-          <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
-        </View>
-      </SafeAreaView>
-    </Modal>
+              {/* Calendar grid starts here */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
+                {calendar.map((day, index) => {
+                  if (day === null) {
+                    return (
+                      <View
+                        key={`empty-${index}`}
+                        style={{
+                          width: `${100 / 7}%`,
+                          height: 44,
+                        }}
+                      />
+                    );
+                  }
+
+                  const isToday =
+                    day === today.getDate() &&
+                    selectedMonth === MONTHS[today.getMonth()] &&
+                    selectedYear === today.getFullYear();
+
+                  const isSelected = selectedDay === day;
+
+                  return (
+                    <View
+                      key={`${selectedMonth}-${selectedYear}-${day}`}
+                      style={{
+                        width: `${100 / 7}%`,
+                        height: 44,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Pressable
+                        onPress={() => {
+                          setSelectedDay(day);
+                          setDay(day);
+                        }}
+                        android_ripple={null}
+                        style={({ pressed }) => ({
+                          width: 40,
+                          height: 40,
+                          borderRadius: 18,
+                          justifyContent: "center",
+                          alignItems: "center",
+
+                          backgroundColor: isSelected
+                            ? "#003366ad"
+                            : "transparent",
+
+                          opacity: pressed ? 0.55 : 1,
+                        })}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            fontWeight: isSelected ? "600" : "400",
+                            color: isSelected
+                              ? themes.blue.primary
+                              : isToday
+                                ? themes.blue.primary
+                                : "#FFFFFF",
+                          }}
+                        >
+                          {day}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  );
+                })}
+              </View>
+
+              <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
+            </GlassView>
+          </SafeAreaView>
+        </Modal>
+      }
+    </>
   );
 }
