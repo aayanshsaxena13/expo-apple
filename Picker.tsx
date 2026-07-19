@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
 import Menu from "./Menu";
 import { GlassView } from "expo-glass-effect";
+import * as Haptics from "expo-haptics";
 
 const dim = Dimensions.get("window");
 
@@ -44,7 +45,10 @@ export default function Picker(props: {
                             padding: dim.width < 450 ? 12 : 18,
                             borderRadius: dim.width < 450 ? 24 : 36,
                         }} glassEffectStyle={"regular"}>
-                            <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={() => setVisible(true)}>
+                            <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={async () => {
+                                setVisible(true);
+                                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+                            }}>
                                 <Ionicons size={dim.width < 450 ? 24 : 36} name="chevron-expand-outline" color={themes.blue.primary} />
                             </Pressable>
                         </GlassView>
