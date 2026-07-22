@@ -4,6 +4,7 @@ import { useRef } from "react";
 import NativeSlider from "@react-native-community/slider";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
+import { GlassButton } from "./Button";
 
 const dim = Dimensions.get("window");
 
@@ -122,26 +123,15 @@ export function Stepper(props: {
       <Paragraph margin={12} color={"white"}>{props.label ? props.label : props.value}</Paragraph>
       <View style={{
         flexDirection: "row",
-        margin: 12
+        margin: 12,
+        gap: 8
       }}>
-        <Pressable style={({ pressed }) => [{
-          backgroundColor: !pressed ? "rgba(73, 73, 73, 0.9)" : "rgba(73, 73, 73, 0.9)",
-          padding: dim.width < 450 ? 12 : 16,
-          borderTopLeftRadius: 16,
-          borderBottomLeftRadius: 16,
-          borderRightColor: "rgb(134, 134, 134)",
-          borderRightWidth: dim.width < 450 ? 1.6 : 3.2
-        }]} onPress={() => props.setValue ? props.setValue((prev: number) => prev - 1) : Alert.alert("Give the prop.")}>
+        <GlassButton onPress={() => props.setValue && props.setValue((prev) => prev - 1)}>
           <Paragraph color={themes.blue.primary}>-</Paragraph>
-        </Pressable>
-        <Pressable style={({ pressed }) => [{
-          backgroundColor: !pressed ? "rgba(73, 73, 73, 0.9)" : "rgba(73, 73, 73, 0.9)",
-          padding: dim.width < 450 ? 12 : 16,
-          borderTopRightRadius: 16,
-          borderBottomRightRadius: 16,
-        }]} onPress={() => props.setValue ? props.setValue((prev: number) => prev + 1) : Alert.alert("Give the prop.")}>
+        </GlassButton>
+        <GlassButton onPress={() => props.setValue && props.setValue((prev) => prev + 1)}>
           <Paragraph color={themes.blue.primary}>+</Paragraph>
-        </Pressable>
+        </GlassButton>
       </View>
     </View>
   );

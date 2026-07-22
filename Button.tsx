@@ -25,12 +25,10 @@ export function Button(props: {
                     padding: dim.width < 450 ? 8 : 12,
                     borderRadius: dim.width < 450 ? 12 : 24,
                     overflow: "hidden",
-                    width: dim.width < 450 ? 120 : 180,
                 }]}>
                     <Paragraph alignment={"center"}>{props.children}</Paragraph>
                 </Pressable> :
                 <Pressable style={({ pressed }) => [{
-                    width: dim.width < 450 ? 120 : 180,
                     borderRadius: dim.width < 450 ? 16 : 24,
                     overflow: "hidden",
                     padding: dim.width < 450 ? 8 : 12,
@@ -79,7 +77,6 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: dim.width < 450 ? 16 : 24,
-                        width: dim.width < 450 ? 120 : 180,
                     }} glassEffectStyle={"regular"}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
