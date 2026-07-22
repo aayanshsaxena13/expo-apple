@@ -322,7 +322,7 @@ export default function DatePicker({
                           justifyContent: "center",
                           alignItems: "center",
 
-                          backgroundColor: isSelected
+                          backgroundColor: isToday && isSelected ? themes.blue.primary : isSelected
                             ? "#003366ad"
                             : "transparent",
 
@@ -333,11 +333,7 @@ export default function DatePicker({
                           style={{
                             fontSize: 20,
                             fontWeight: isSelected ? "600" : "400",
-                            color: isSelected
-                              ? themes.blue.primary
-                              : isToday
-                                ? themes.blue.primary
-                                : "#FFFFFF",
+                            color: isToday && isSelected ? "white" : isSelected ? themes.blue.primary : "white",
                           }}
                         >
                           {day}

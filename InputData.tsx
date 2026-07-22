@@ -1,10 +1,11 @@
-import { Alert, Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
+import { Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRef } from "react";
 import NativeSlider from "@react-native-community/slider";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
 import { GlassButton } from "./Button";
+import * as Haptics from "expo-haptics";
 
 const dim = Dimensions.get("window");
 
@@ -45,34 +46,35 @@ export function Checkbox({
   alignment?: FlexAlignType;
 }) {
   const scale = useRef(new Animated.Value(1)).current;
-
-  const handlePress = () => {
-    // quick scale animation
+  const handlePress = async () => {
     Animated.sequence([
       Animated.spring(scale, {
-        toValue: 0.85,
-        useNativeDriver: true,
+        toValue: 1.05,
+        useNativeDriver: true
       }),
       Animated.spring(scale, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
+        toValue: 0.95,
+        useNativeDriver: true
+      })
     ]).start();
 
-    onChange?.(); // parent toggle karega
+    onChange?.();
+
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   return (
     <Pressable onPress={handlePress}>
       <Animated.View style={{
-        transform: [{ scale }],
         margin: margin,
-        alignSelf: alignment
+        alignSelf: alignment,
+        transform: [{ scale: scale }],
+        width: 30
       }}>
         <Ionicons
-          name={value ? "ellipse" : "ellipse-outline"}
+          name={value ? "checkbox" : "square-outline"}
           size={30}
-          color="rgb(0, 92, 255)"
+          color={themes.blue.primary}
         />
       </Animated.View>
     </Pressable>
