@@ -4,7 +4,6 @@ import { useRef } from "react";
 import NativeSlider from "@react-native-community/slider";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
-import { GlassButton } from "./Button";
 import * as Haptics from "expo-haptics";
 
 const dim = Dimensions.get("window");
@@ -111,8 +110,8 @@ export function Slider({
 export function Stepper(props: {
   margin?: number;
   alignment?: FlexAlignType;
-  value?: number;
-  setValue?: React.Dispatch<React.SetStateAction<number>>;
+  value: number;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
   label?: string;
 }) {
   return (
@@ -122,18 +121,29 @@ export function Stepper(props: {
       margin: props.margin,
       alignSelf: props.alignment,
     }}>
-      <Paragraph margin={12} color={"white"}>{props.label ? props.label : props.value}</Paragraph>
+      {props.label && <Paragraph margin={12} color={"white"}>{props.label}</Paragraph>}
       <View style={{
         flexDirection: "row",
         margin: 12,
-        gap: 8
       }}>
-        <GlassButton onPress={() => props.setValue && props.setValue((prev) => prev - 1)}>
+        <Pressable style={({ pressed }) => [{
+          backgroundColor: !pressed ? "rgba(31, 31, 31, 0.5)" : "rgba(62, 62, 62, 0.5)",
+          padding: 12,
+          borderTopLeftRadius: 16,
+          borderBottomLeftRadius: 16,
+          borderWidth: dim.width < 450 ? 1.6 : 3.2,
+          borderColor: "rgba(134, 134, 134, 0.5)",
+        }]} onPress={() => props.setValue((prev: number) => prev - 1)}>
           <Paragraph color={themes.blue.primary}>-</Paragraph>
-        </GlassButton>
-        <GlassButton onPress={() => props.setValue && props.setValue((prev) => prev + 1)}>
+        </Pressable>
+        <Pressable style={({ pressed }) => [{
+          backgroundColor: !pressed ? "rgba(31, 31, 31, 0.5)" : "rgba(62, 62, 62, 0.5)",
+          padding: 12,
+          borderTopRightRadius: 16,
+          borderBottomRightRadius: 16,
+        }]} onPress={() => props.setValue((prev: number) => prev + 1)}>
           <Paragraph color={themes.blue.primary}>+</Paragraph>
-        </GlassButton>
+        </Pressable>
       </View>
     </View>
   );
