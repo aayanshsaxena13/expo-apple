@@ -131,7 +131,7 @@ export function Stepper(props: {
           padding: 12,
           borderTopLeftRadius: 16,
           borderBottomLeftRadius: 16,
-          borderWidth: dim.width < 450 ? 1.6 : 3.2,
+          borderRightWidth: dim.width < 450 ? 1.6 : 3.2,
           borderColor: "rgba(134, 134, 134, 0.5)",
         }]} onPress={() => props.setValue((prev: number) => prev - 1)}>
           <Paragraph color={themes.blue.primary}>-</Paragraph>
