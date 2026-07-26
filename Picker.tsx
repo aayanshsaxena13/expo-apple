@@ -1,4 +1,4 @@
-import { Animated, Dimensions, DimensionValue, FlexAlignType, Platform, Pressable, View } from "react-native";
+import { Animated, Dimensions, DimensionValue, Button as UIButton, FlexAlignType, Modal, Platform, Pressable, ScrollView, View } from "react-native";
 import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
@@ -14,13 +14,19 @@ export default function Picker(props: {
     setOption: (i: string) => void;
     margin?: number;
     alignment?: FlexAlignType;
-    variant: "segmented" | "menu";
+    variant: "segmented" | "menu" | "wheel";
     option: string;
+    wheelWidth?: number;
 }) {
     const scale = useRef(new Animated.Value(1)).current;
     const [visible, setVisible] = useState<boolean>(false);
     const cellWidth: DimensionValue = dim.width / props.options.length;
     const left = useRef(new Animated.Value(0)).current;
+    const ITEM_HEIGHT = 36;
+    const VISIBLE_ROWS = 5;
+    const PICKER_HEIGHT = ITEM_HEIGHT * VISIBLE_ROWS;
+    const PADDING = (PICKER_HEIGHT - ITEM_HEIGHT) / 2;
+    const wheelRef = useRef<ScrollView | null>(null);
 
     const onPressIn = () => {
         Animated.spring(scale, {
@@ -124,6 +130,141 @@ export default function Picker(props: {
                     ))}
                 </View>
             }
+            {Platform.OS === "ios" && props.variant === "wheel" && (
+                <View style={{ margin: props.margin, alignSelf: props.alignment }}>
+                    <Animated.View style={{ transform: [{ scale }] }}>
+                        <GlassView
+                            glassEffectStyle="regular"
+                            style={{
+                                padding: dim.width < 450 ? 12 : 18,
+                                borderRadius: dim.width < 450 ? 24 : 36,
+                            }}
+                        >
+                            <Pressable
+                                onPressIn={onPressIn}
+                                onPressOut={onPressOut}
+                                onPress={async () => {
+                                    setVisible(true);
+
+                                    requestAnimationFrame(() => {
+                                        const index = props.options.indexOf(props.option);
+
+                                        wheelRef.current?.scrollTo({
+                                            y: index * ITEM_HEIGHT,
+                                            animated: false,
+                                        });
+                                    });
+
+                                    await Haptics.impactAsync(
+                                        Haptics.ImpactFeedbackStyle.Light
+                                    );
+                                }}
+                            >
+                                <Ionicons
+                                    size={dim.width < 450 ? 24 : 36}
+                                    name="chevron-expand-outline"
+                                    color={themes.blue.primary}
+                                />
+                            </Pressable>
+                        </GlassView>
+                    </Animated.View>
+
+                    <Modal transparent animationType="fade" visible={visible}>
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: "rgba(0,0,0,0.35)",
+                            }}
+                        >
+                            <GlassView
+                                glassEffectStyle="regular"
+                                style={{
+                                    width: props.wheelWidth ?? 250,
+                                    borderRadius: 24,
+                                    overflow: "hidden",
+                                    paddingVertical: 16,
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        height: PICKER_HEIGHT,
+                                        position: "relative",
+                                    }}
+                                >
+                                    <ScrollView
+                                        ref={wheelRef}
+                                        showsVerticalScrollIndicator={false}
+                                        snapToInterval={ITEM_HEIGHT}
+                                        decelerationRate="fast"
+                                        bounces={false}
+                                        contentContainerStyle={{
+                                            paddingVertical: PADDING,
+                                        }}
+                                        onMomentumScrollEnd={(e) => {
+                                            const index = Math.round(
+                                                e.nativeEvent.contentOffset.y / ITEM_HEIGHT
+                                            );
+
+                                            props.setOption(props.options[index]);
+                                        }}
+                                    >
+                                        {props.options.map((value, index) => (
+                                            <Pressable
+                                                key={index}
+                                                style={{
+                                                    height: ITEM_HEIGHT,
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                }}
+                                                onPress={() => {
+                                                    wheelRef.current?.scrollTo({
+                                                        y: index * ITEM_HEIGHT,
+                                                        animated: true,
+                                                    });
+
+                                                    props.setOption(value);
+                                                }}
+                                            >
+                                                <Paragraph
+                                                    alignment="center"
+                                                    color={
+                                                        props.option === value
+                                                            ? themes.blue.primary
+                                                            : "white"
+                                                    }
+                                                >
+                                                    {value}
+                                                </Paragraph>
+                                            </Pressable>
+                                        ))}
+                                    </ScrollView>
+
+                                    <GlassView
+                                        glassEffectStyle="regular"
+                                        style={{
+                                            position: "absolute",
+                                            left: 0,
+                                            right: 0,
+                                            top: PADDING,
+                                            height: ITEM_HEIGHT,
+                                            borderRadius: 16,
+                                            pointerEvents: "none",
+                                        }}
+                                    />
+                                </View>
+
+                                <UIButton
+                                    title="Done"
+                                    color={themes.red.primary}
+                                    onPress={() => setVisible(false)}
+                                />
+                            </GlassView>
+                        </View>
+                    </Modal>
+                </View>
+            )}
         </>
     )
 }
