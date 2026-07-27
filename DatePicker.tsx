@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
 import { GlassView } from "expo-glass-effect";
+import Picker from "./Picker";
 
 interface Props {
   visible: boolean;
@@ -57,6 +58,7 @@ export default function DatePicker({
   setYear,
 }: Props) {
   const today = new Date();
+  const [wheelVisible, setWheelVisible] = useState<boolean>(false);
 
   const [selectedMonth, setSelectedMonth] = useState(
     MONTHS[today.getMonth()]
@@ -153,6 +155,8 @@ export default function DatePicker({
     return cells;
   }, [selectedMonth, selectedYear]);
 
+  const daysGrid = calendar.filter((item) => item !== null || item !== undefined).map((item) => `${item}`);
+
   return (
     <>
       {Platform.OS === "ios" &&
@@ -195,15 +199,23 @@ export default function DatePicker({
                   marginBottom: 18,
                 }}
               >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 28,
-                    fontWeight: "600",
-                  }}
-                >
-                  {selectedMonth} {selectedYear}
-                </Text>
+                <Pressable onPress={() => {
+                  setWheelVisible(true);
+                }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 28,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {selectedMonth} {selectedYear}
+                  </Text>
+                </Pressable>
+
+                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                  <Picker option={selectedMonth} setOption={setSelectedMonth} options={MONTHS} variant="wheel" wheelVisible={wheelVisible} setWheelVisible={setWheelVisible} />
+                </View>
 
                 <View
                   style={{
