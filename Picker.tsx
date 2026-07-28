@@ -1,4 +1,4 @@
-import { Animated, Dimensions, DimensionValue, Button as UIButton, FlexAlignType, Modal, Platform, Pressable, ScrollView, View } from "react-native";
+import { Animated, Dimensions, DimensionValue, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
 import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
@@ -17,8 +17,6 @@ export default function Picker(props: {
     variant: "segmented" | "menu" | "wheel";
     option: string;
     wheelWidth?: number;
-    wheelVisible?: boolean;
-    setWheelVisible?: (v: boolean) => void;
 }) {
     const scale = useRef(new Animated.Value(1)).current;
     const [visible, setVisible] = useState<boolean>(false);
@@ -133,55 +131,45 @@ export default function Picker(props: {
             }
             {Platform.OS === "ios" && props.variant === "wheel" && (
                 <>
-                    <Modal onShow={() => {
-                        const index = props.options.indexOf(props.option);
+                    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                        <View
+                            style={{
+                                position: "relative",
+                                height: 360,
+                                width: wheelWidth,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <ScrollView disableIntervalMomentum scrollEventThrottle={16} snapToInterval={26} decelerationRate={"fast"} showsVerticalScrollIndicator={false} onMomentumScrollEnd={(e) => {
+                                const index = Math.round(
+                                    e.nativeEvent.contentOffset.y / 36
+                                );
 
-                        wheelRef.current?.scrollTo({
-                            y: index * 36,
-                            animated: false,
-                        });
-                    }} visible={props.wheelVisible} transparent animationType="slide">
-                        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                            <View
-                                style={{
-                                    position: "relative",
-                                    height: 360,
-                                    width: wheelWidth,
-                                    overflow: "hidden",
-                                }}
-                            >
-                                <ScrollView disableIntervalMomentum scrollEventThrottle={16} snapToInterval={26} decelerationRate={"fast"} showsVerticalScrollIndicator={false} onMomentumScrollEnd={(e) => {
-                                    const index = Math.round(
-                                        e.nativeEvent.contentOffset.y / 36
-                                    );
+                                props.setOption(props.options[index]);
+                            }} ref={wheelRef} style={{
+                                height: 360,
+                                width: wheelWidth,
+                            }} contentContainerStyle={{
+                                alignItems: "center",
+                                paddingVertical: (360 - 36) / 2,
+                            }}>
+                                {props.options.map((value, index) => (
+                                    <View key={index.toString()} style={{ height: 36, width: wheelWidth, justifyContent: "center", alignItems: "center" }}>
+                                        <Paragraph alignment="center" color={props.option !== value ? "white" : themes.blue.primary}>{value}</Paragraph>
+                                    </View>
+                                ))}
+                            </ScrollView>
 
-                                    props.setOption(props.options[index]);
-                                }} ref={wheelRef} style={{
-                                    height: 360,
-                                    width: wheelWidth,
-                                }} contentContainerStyle={{
-                                    alignItems: "center",
-                                    paddingVertical: (360 - 36) / 2,
-                                }}>
-                                    {props.options.map((value, index) => (
-                                        <View key={index.toString()} style={{ height: 36, width: wheelWidth, justifyContent: "center", alignItems: "center" }}>
-                                            <Paragraph alignment="center" color={props.option !== value ? "white" : themes.blue.primary}>{value}</Paragraph>
-                                        </View>
-                                    ))}
-                                </ScrollView>
-
-                                <GlassView pointerEvents="none" style={{
-                                    position: "absolute",
-                                    height: 36,
-                                    width: wheelWidth,
-                                    borderRadius: 24,
-                                    top: (360 - 36) / 2,
-                                    zIndex: 2,
-                                }} glassEffectStyle={"clear"} />
-                            </View>
-                            <UIButton title="Done" onPress={() => props.setWheelVisible?.(false)} color={themes.red.primary} />
+                            <GlassView pointerEvents="none" style={{
+                                position: "absolute",
+                                height: 36,
+                                width: wheelWidth,
+                                borderRadius: 24,
+                                top: (360 - 36) / 2,
+                                zIndex: 2,
+                            }} glassEffectStyle={"clear"} />
                         </View>
-                    </Modal>
+                    </View>
                 </>
             )
             }

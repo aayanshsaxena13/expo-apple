@@ -155,7 +155,7 @@ export default function DatePicker({
     return cells;
   }, [selectedMonth, selectedYear]);
 
-  const daysGrid = calendar.filter((item) => item !== null || item !== undefined).map((item) => `${item}`);
+  const daysGrid = calendar.filter((item) => item !== null).map((item) => `${item}`);
 
   return (
     <>
@@ -213,9 +213,17 @@ export default function DatePicker({
                   </Text>
                 </Pressable>
 
-                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                  <Picker option={selectedMonth} setOption={setSelectedMonth} options={MONTHS} variant="wheel" wheelVisible={wheelVisible} setWheelVisible={setWheelVisible} />
-                </View>
+                <Modal transparent animationType="fade" visible={wheelVisible}>
+                  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                      <Picker wheelWidth={120} option={selectedMonth} setOption={setSelectedMonth} options={MONTHS} variant="wheel" />
+                      <Picker wheelWidth={100} option={`${selectedDay}`} setOption={(i: string) => {
+                        setSelectedDay(Number(i));
+                      }} options={daysGrid} variant="wheel" />
+                    </View>
+                    <Button title="Done" color={themes.red.primary} onPress={() => setWheelVisible(false)} />
+                  </View>
+                </Modal>
 
                 <View
                   style={{
