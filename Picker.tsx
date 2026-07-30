@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import { GlassView } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { Paragraph } from "./RichText";
+import { GlassButton } from "./Button";
 
 const dim = Dimensions.get("window");
 
@@ -46,21 +47,9 @@ export default function Picker(props: {
                     margin: props.margin,
                     alignSelf: props.alignment,
                 }}>
-                    <Animated.View style={{
-                        transform: [{ scale }],
-                    }}>
-                        <GlassView style={{
-                            padding: dim.width < 450 ? 12 : 18,
-                            borderRadius: dim.width < 450 ? 24 : 36,
-                        }} glassEffectStyle={"regular"}>
-                            <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={async () => {
-                                setVisible(true);
-                                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-                            }}>
-                                <Ionicons size={dim.width < 450 ? 24 : 36} name="chevron-expand-outline" color={themes.blue.primary} />
-                            </Pressable>
-                        </GlassView>
-                    </Animated.View>
+                    <GlassButton onPress={() => setVisible(true)}>
+                        <Ionicons name="chevron-expand-outline" size={32} />
+                    </GlassButton>
 
                     <Menu options={props.options} visible={visible} setOption={props.setOption} setVisible={setVisible} />
                 </View>
@@ -146,6 +135,8 @@ export default function Picker(props: {
                                 );
 
                                 props.setOption(props.options[index]);
+
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                             }} ref={wheelRef} style={{
                                 height: 360,
                                 width: wheelWidth,

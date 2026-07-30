@@ -18,7 +18,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
         alignSelf: alignment,
         color: color ? color : "white",
         fontWeight: 700,
-        padding: dim.width < 450 ? 8 : 12,
+        padding: 8,
         margin: margin,
         borderColor: "rgba(59, 59, 59, 0.5)",
         backgroundColor: "transparent",
@@ -26,7 +26,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
         width: dim.width < 450 ? 280 : 320,
         fontSize: dim.width < 450 ? 20 : 24,
         overflow: "hidden",
-        borderRadius: dim.width < 450 ? 12 : 16,
+        borderRadius: 12,
       }}
       secureTextEntry={security}
     />
