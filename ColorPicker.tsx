@@ -24,7 +24,7 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
                         margin: 20,
                         backgroundColor: 'rgba(16, 16, 16, 0.95)',
                         borderRadius: 16,
-                        padding: 12,
+                        padding: 8,
                         alignItems: 'center',
                         shadowColor: '#000',
                         shadowOffset: {

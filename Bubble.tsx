@@ -1,8 +1,6 @@
-import { Dimensions, FlexAlignType, View } from "react-native";
+import { FlexAlignType, View } from "react-native";
 import { Paragraph } from "./RichText";
 import { themes } from "./constants/themes";
-
-const dim = Dimensions.get("window");
 
 export default function Bubble({ children, margin, alignment, color }: { children?: string; margin?: number; alignment?: FlexAlignType; color?: string; }) {
     return (
@@ -10,10 +8,10 @@ export default function Bubble({ children, margin, alignment, color }: { childre
             alignSelf: alignment,
             margin: margin,
             backgroundColor: color ? color : themes.blue.primary,
-            padding: dim.width < 450 ? 8 : 12,
-            borderTopRightRadius: dim.width < 450 ? 16 : 24,
-            borderBottomLeftRadius: dim.width < 450 ? 16 : 24,
-            borderBottomRightRadius: dim.width < 450 ? 16 : 24,
+            padding: 8,
+            borderTopRightRadius: 16,
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
         }}>
             <Paragraph>{children}</Paragraph>
         </View>

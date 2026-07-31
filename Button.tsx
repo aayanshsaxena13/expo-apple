@@ -74,7 +74,7 @@ export function GlassButton(props: {
                         padding: 8,
                         margin: props.margin,
                         alignSelf: props.alignment,
-                        borderRadius: 16,
+                        borderRadius: 12,
                     }} glassEffectStyle={"regular"}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}

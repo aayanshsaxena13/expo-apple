@@ -338,7 +338,7 @@ export default function DatePicker({
                         style={({ pressed }) => ({
                           width: 40,
                           height: 40,
-                          borderRadius: 18,
+                          borderRadius: 16,
                           justifyContent: "center",
                           alignItems: "center",
 

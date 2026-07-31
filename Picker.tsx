@@ -1,4 +1,4 @@
-import { Animated, Dimensions, DimensionValue, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
+import { Animated, Dimensions, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
 import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
@@ -21,24 +21,9 @@ export default function Picker(props: {
 }) {
     const scale = useRef(new Animated.Value(1)).current;
     const [visible, setVisible] = useState<boolean>(false);
-    const cellWidth: DimensionValue = dim.width / props.options.length;
     const left = useRef(new Animated.Value(0)).current;
     const wheelRef = useRef<ScrollView>(null);
     const wheelWidth = props.wheelWidth ?? 240;
-
-    const onPressIn = () => {
-        Animated.spring(scale, {
-            toValue: 1.2,
-            useNativeDriver: true,
-        }).start();
-    }
-
-    const onPressOut = () => {
-        Animated.spring(scale, {
-            toValue: 1,
-            useNativeDriver: true,
-        }).start();
-    }
 
     return (
         <>
@@ -55,14 +40,14 @@ export default function Picker(props: {
                 </View>
             }
             {Platform.OS === "ios" && props.variant === "segmented" &&
-                <View style={{
+                <GlassView style={{
                     margin: props.margin,
                     alignSelf: props.alignment,
                     flexDirection: "row",
-                    width: dim.width,
+                    width: 300,
                     position: "relative",
                     borderRadius: 24
-                }}>
+                }} glassEffectStyle={"clear"}>
                     {/* Glass pill selector */}
                     <Animated.View style={{
                         transform: [{ translateX: left }, { scale }],
@@ -71,7 +56,7 @@ export default function Picker(props: {
                         <GlassView
                             glassEffectStyle={"regular"}
                             style={{
-                                width: cellWidth,
+                                width: 300 / props.options.length,
                                 borderRadius: 24,
                                 height: 36,
                                 padding: 4,
@@ -81,15 +66,11 @@ export default function Picker(props: {
 
                     {/* Moment of truth list */}
                     {props.options.map((val: string, i: number) => (
-                        <GlassView key={i.toString()} style={{
-                            width: cellWidth,
-                            borderTopLeftRadius: i === 0 ? 24 : 0,
-                            borderTopRightRadius: i === props.options.length - 1 ? 24 : 0,
-                            borderBottomLeftRadius: i === 0 ? 24 : 0,
-                            borderBottomRightRadius: i === props.options.length - 1 ? 24 : 0,
+                        <View key={i.toString()} style={{
+                            width: 300 / props.options.length,
                             height: 36,
                             padding: 4,
-                        }} glassEffectStyle={"clear"}>
+                        }}>
                             <Pressable onPressIn={() => {
                                 Animated.sequence([
                                     Animated.timing(scale, {
@@ -114,9 +95,9 @@ export default function Picker(props: {
                                     <Paragraph color={props.option === val ? themes.blue.primary : "white"} alignment="center">{val}</Paragraph>
                                 </View>
                             </Pressable>
-                        </GlassView>
+                        </View>
                     ))}
-                </View>
+                </GlassView>
             }
             {Platform.OS === "ios" && props.variant === "wheel" && (
                 <>
