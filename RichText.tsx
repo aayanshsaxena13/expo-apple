@@ -8,7 +8,7 @@ export function LinkView({ color, href, children, alignment, margin }: { color?:
         <Link style={{
             color: color ? color : "rgb(63, 146, 255)",
             textAlign: alignment,
-            fontSize: dim.width < 450 ? 20 : 24,
+            fontSize: 16,
             fontWeight: 700,
             margin: margin,
         }} href={href}>
@@ -21,7 +21,7 @@ export function Header({ color, alignment, children, margin }: { color?: string,
     return (
         <Text style={{
             color: color ? color : "rgb(255, 255, 255)",
-            fontSize: dim.width < 450 ? 28 : 36,
+            fontSize: 28,
             fontWeight: 800,
             textAlign: alignment,
             margin: margin,
@@ -35,7 +35,7 @@ export function Paragraph({ color, alignment, children, margin }: { color?: stri
     return (
         <Text style={{
             color: color ? color : "rgb(255, 255, 255)",
-            fontSize: dim.width < 450 ? 20 : 24,
+            fontSize: 16,
             fontWeight: 700,
             textAlign: alignment,
             margin: margin,

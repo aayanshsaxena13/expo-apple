@@ -47,29 +47,14 @@ export default function Picker(props: {
                     width: 300,
                     position: "relative",
                     borderRadius: 24
-                }} glassEffectStyle={"clear"}>
-                    {/* Glass pill selector */}
-                    <Animated.View style={{
-                        transform: [{ translateX: left }, { scale }],
-                        position: "absolute"
-                    }}>
-                        <GlassView
-                            glassEffectStyle={"regular"}
-                            style={{
-                                width: 300 / props.options.length,
-                                borderRadius: 24,
-                                height: 36,
-                                padding: 4,
-                            }}
-                        />
-                    </Animated.View>
-
+                }} glassEffectStyle={"regular"}>
                     {/* Moment of truth list */}
                     {props.options.map((val: string, i: number) => (
                         <View key={i.toString()} style={{
                             width: 300 / props.options.length,
                             height: 36,
                             padding: 4,
+                            zIndex: 1,
                         }}>
                             <Pressable onPressIn={() => {
                                 Animated.sequence([
@@ -80,7 +65,7 @@ export default function Picker(props: {
                                     }),
                                     Animated.parallel([
                                         Animated.spring(left, {
-                                            toValue: (dim.width / props.options.length) * i,
+                                            toValue: (300 / props.options.length) * i,
                                             useNativeDriver: true,
                                         }),
                                         Animated.timing(scale, {
@@ -97,6 +82,22 @@ export default function Picker(props: {
                             </Pressable>
                         </View>
                     ))}
+
+                    {/* Glass pill selector */}
+                    <Animated.View style={{
+                        transform: [{ translateX: left }, { scale }],
+                        position: "absolute"
+                    }}>
+                        <GlassView
+                            glassEffectStyle={"clear"}
+                            style={{
+                                width: 300 / props.options.length,
+                                borderRadius: 24,
+                                height: 36,
+                                padding: 4,
+                            }}
+                        />
+                    </Animated.View>
                 </GlassView>
             }
             {Platform.OS === "ios" && props.variant === "wheel" && (
