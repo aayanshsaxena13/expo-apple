@@ -1,14 +1,12 @@
-import { Animated, Dimensions, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
-import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { themes } from "./constants/themes";
-import Menu from "./Menu";
 import { GlassView } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
-import { Paragraph } from "./RichText";
+import { useRef, useState } from "react";
+import { Animated, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
 import { GlassButton } from "./Button";
-
-const dim = Dimensions.get("window");
+import { themes } from "./constants/themes";
+import Menu from "./Menu";
+import { Paragraph } from "./RichText";
 
 export default function Picker(props: {
     options: string[];
@@ -127,7 +125,7 @@ export default function Picker(props: {
                                 paddingVertical: (360 - 36) / 2,
                             }}>
                                 {props.options.map((value, index) => (
-                                    <View key={index.toString()} style={{ height: 36, width: wheelWidth, justifyContent: "center", alignItems: "center" }}>
+                                    <View key={index.toString()} style={{ height: 36, width: wheelWidth, justifyContent: "center", alignItems: "center", zIndex: 2 }}>
                                         <Paragraph alignment="center" color={props.option !== value ? "white" : themes.blue.primary}>{value}</Paragraph>
                                     </View>
                                 ))}
@@ -139,7 +137,7 @@ export default function Picker(props: {
                                 width: wheelWidth,
                                 borderRadius: 24,
                                 top: (360 - 36) / 2,
-                                zIndex: 2,
+                                zIndex: -1,
                             }} glassEffectStyle={"clear"} />
                         </View>
                     </View>

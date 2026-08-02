@@ -1,7 +1,5 @@
-import { Dimensions, Text } from "react-native";
 import { Link, RelativePathString } from "expo-router";
-
-const dim = Dimensions.get("window");
+import { Text } from "react-native";
 
 export function LinkView({ color, href, children, alignment, margin }: { color?: string, href: RelativePathString, children?: string | string[] | number, alignment?: "center" | "auto" | "justify" | "left" | "right", margin?: number }) {
     return (

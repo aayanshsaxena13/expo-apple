@@ -1,10 +1,10 @@
-import { Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef } from "react";
 import NativeSlider from "@react-native-community/slider";
+import * as Haptics from "expo-haptics";
+import { useRef } from "react";
+import { Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
-import * as Haptics from "expo-haptics";
 
 const dim = Dimensions.get("window");
 

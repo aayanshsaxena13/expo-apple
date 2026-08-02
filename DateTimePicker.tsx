@@ -1,26 +1,37 @@
+import { Ionicons } from "@expo/vector-icons";
+import { GlassView } from "expo-glass-effect";
 import { useEffect, useMemo, useState } from "react";
 import {
-  Modal,
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
   Button,
   Dimensions,
+  Modal,
   Platform,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
 import { themes } from "./constants/themes";
-import { GlassView } from "expo-glass-effect";
 import Picker from "./Picker";
 
-interface Props {
+interface DPP {
   visible: boolean;
   setVisible: (visible: boolean) => void;
   setDay: (day: number) => void;
   setMonth: (month: string) => void;
   setYear: (year: number) => void;
+}
+
+interface TPP {
+  hour: number;
+  minute: number;
+  phase: "AM" | "PM";
+  setHours: (i: number) => void;
+  setMinutes: (i: number) => void;
+  setPhase: (i: any) => void;
+  visible: boolean;
+  setVisible: (i: boolean) => void;
 }
 
 const MONTHS = [
@@ -56,7 +67,7 @@ export default function DatePicker({
   setDay,
   setMonth,
   setYear,
-}: Props) {
+}: DPP) {
   const today = new Date();
   const [wheelVisible, setWheelVisible] = useState<boolean>(false);
 
@@ -370,5 +381,72 @@ export default function DatePicker({
         </Modal>
       }
     </>
+  );
+}
+
+// Time-picker constants...
+const minutes: string[] = ['0'];
+const hours: string[] = [];
+const phases = ["AM", "PM"];
+
+for (let i = 1; i <= 59; i++) {
+  minutes.push(String(i));
+
+  if (i < 13) {
+    hours.push(String(i));
+  }
+};
+
+export function TimePicker({
+  hour,
+  minute,
+  phase,
+  setHours,
+  setMinutes,
+  setPhase,
+  visible,
+  setVisible
+}: TPP) {
+  return (
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      statusBarTranslucent
+    >
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <GlassView
+          style={{
+            width: 360,
+            backgroundColor: "#1c1c1e21",
+            borderRadius: 20,
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            paddingBottom: 16,
+            height: 420,
+            shadowColor: "#000",
+            shadowOpacity: 0.12,
+            shadowRadius: 24,
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+          }}
+        >
+          <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+            <Picker wheelWidth={130} option={`${hour}`} variant="wheel" options={hours} setOption={(i: string) => setHours(Number(i))} />
+            <Picker wheelWidth={130} option={`${minute}`} variant="wheel" options={minutes} setOption={(i: string) => setMinutes(Number(i))} />
+            <Picker wheelWidth={130} option={phase} variant="wheel" options={phases} setOption={(i) => setPhase(i)} />
+          </View>
+          <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
+        </GlassView>
+      </SafeAreaView>
+    </Modal>
   );
 }
