@@ -32,7 +32,7 @@ export function Button(props: {
                     padding: 8,
                     alignSelf: props.alignment,
                     margin: props.margin,
-                    backgroundColor: !pressed ? "rgba(36, 36, 36, 0.3)" : "rgba(72, 72, 72, 0.3)",
+                    backgroundColor: !pressed ? "rgba(36, 36, 36, 0.2)" : "rgba(72, 72, 72, 0.2)",
                 }]} onPress={props.onPress}>
                     <Paragraph color={props.color} alignment={"center"}>{props.children}</Paragraph>
                 </Pressable>
