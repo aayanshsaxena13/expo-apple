@@ -61,7 +61,7 @@ const WEEKDAYS = [
 
 const dim = Dimensions.get("window");
 
-export default function DatePicker({
+export function DatePicker({
   visible,
   setVisible,
   setDay,
