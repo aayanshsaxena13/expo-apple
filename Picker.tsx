@@ -44,7 +44,7 @@ export default function Picker(props: {
                     flexDirection: "row",
                     width: 300,
                     position: "relative",
-                    borderRadius: 24
+                    borderRadius: 999
                 }} glassEffectStyle={"regular"}>
                     {/* Moment of truth list */}
                     {props.options.map((val: string, i: number) => (
@@ -53,14 +53,18 @@ export default function Picker(props: {
                             height: 36,
                             padding: 4,
                             zIndex: 1,
+                            justifyContent: "center",
+                            alignItems: "center"
                         }}>
                             <Pressable onPressIn={() => {
                                 Animated.sequence([
+                                    // Expansion...
                                     Animated.timing(scale, {
-                                        toValue: 1.2,
+                                        toValue: 1.5,
                                         duration: 100,
                                         useNativeDriver: true,
                                     }),
+                                    // Movement in parallel...
                                     Animated.parallel([
                                         Animated.spring(left, {
                                             toValue: (300 / props.options.length) * i,
@@ -71,10 +75,11 @@ export default function Picker(props: {
                                             duration: 100,
                                             useNativeDriver: true,
                                         }),
-                                    ])
+                                    ]),
+                                    // The Playback of sequence...
                                 ]).start();
                             }} onPressOut={() => props.setOption(val)}>
-                                <View style={{ height: 36 }}>
+                                <View style={{ height: 36, width: 300 / props.options.length, justifyContent: "center", alignItems: "center" }}>
                                     <Paragraph color={props.option === val ? themes.blue.primary : "white"} alignment="center">{val}</Paragraph>
                                 </View>
                             </Pressable>
@@ -90,7 +95,7 @@ export default function Picker(props: {
                             glassEffectStyle={"clear"}
                             style={{
                                 width: 300 / props.options.length,
-                                borderRadius: 24,
+                                borderRadius: 999,
                                 height: 36,
                                 padding: 4,
                             }}
@@ -135,7 +140,7 @@ export default function Picker(props: {
                                 position: "absolute",
                                 height: 36,
                                 width: wheelWidth,
-                                borderRadius: 24,
+                                borderRadius: 999,
                                 top: (360 - 36) / 2,
                                 zIndex: -1,
                             }} glassEffectStyle={"clear"} />

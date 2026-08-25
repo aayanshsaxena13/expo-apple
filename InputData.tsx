@@ -26,7 +26,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
         width: dim.width < 450 ? 280 : 320,
         fontSize: 16,
         overflow: "hidden",
-        borderRadius: 16,
+        borderRadius: 12,
       }}
       secureTextEntry={security}
     />
@@ -129,8 +129,8 @@ export function Stepper(props: {
         <Pressable style={({ pressed }) => [{
           backgroundColor: !pressed ? "rgba(31, 31, 31, 0.5)" : "rgba(62, 62, 62, 0.5)",
           padding: 8,
-          borderTopLeftRadius: 16,
-          borderBottomLeftRadius: 16,
+          borderTopLeftRadius: 12,
+          borderBottomLeftRadius: 12,
           borderRightWidth: dim.width < 450 ? 1.6 : 3.2,
           borderColor: "rgba(134, 134, 134, 0.5)",
         }]} onPress={() => props.setValue((prev: number) => prev - 1)}>
@@ -139,8 +139,8 @@ export function Stepper(props: {
         <Pressable style={({ pressed }) => [{
           backgroundColor: !pressed ? "rgba(31, 31, 31, 0.5)" : "rgba(62, 62, 62, 0.5)",
           padding: 8,
-          borderTopRightRadius: 16,
-          borderBottomRightRadius: 16,
+          borderTopRightRadius: 12,
+          borderBottomRightRadius: 12,
         }]} onPress={() => props.setValue((prev: number) => prev + 1)}>
           <Paragraph color={themes.blue.primary}>+</Paragraph>
         </Pressable>

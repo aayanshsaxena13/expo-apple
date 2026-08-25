@@ -29,10 +29,10 @@ export function List<ITEM extends Object>({ data, renderItem, alignment, margin,
           style={{
             backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
             padding: 8,
-            borderTopLeftRadius: index == 0 ? 16 : 0,
-            borderTopRightRadius: index == 0 ? 16 : 0,
-            borderBottomLeftRadius: index == data.length - 1 ? 16 : 0,
-            borderBottomRightRadius: index == data.length - 1 ? 16 : 0,
+            borderTopLeftRadius: index == 0 ? 12 : 0,
+            borderTopRightRadius: index == 0 ? 12 : 0,
+            borderBottomLeftRadius: index == data.length - 1 ? 12 : 0,
+            borderBottomRightRadius: index == data.length - 1 ? 12 : 0,
             borderBottomWidth: index != data.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
             borderColor: "rgb(134, 134, 134)",
           }}
@@ -52,7 +52,7 @@ export function Table<T extends Object>({ data, margin, alignment, color }: { da
       alignSelf: alignment,
       flexDirection: "column",
       backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
-      borderRadius: 16
+      borderRadius: 12
     }}>
       <View style={{ flexDirection: "row" }}>
         {keys.map((key: string, index: number) => (

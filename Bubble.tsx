@@ -9,9 +9,9 @@ export default function Bubble({ children, margin, alignment, color }: { childre
             margin: margin,
             backgroundColor: color ? color : themes.blue.primary,
             padding: 8,
-            borderTopRightRadius: 16,
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
+            borderTopRightRadius: 12,
+            borderBottomLeftRadius: 12,
+            borderBottomRightRadius: 12,
         }}>
             <Paragraph>{children}</Paragraph>
         </View>

@@ -23,7 +23,7 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
                     <SafeAreaView style={{
                         margin: 20,
                         backgroundColor: 'rgba(16, 16, 16, 0.95)',
-                        borderRadius: 16,
+                        borderRadius: 12,
                         padding: 8,
                         alignItems: 'center',
                         shadowColor: '#000',

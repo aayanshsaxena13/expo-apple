@@ -188,8 +188,8 @@ export default function DatePicker({
               style={{
                 width: dim.width < 450 ? 280 : 320,
                 backgroundColor: "#1c1c1e21",
-                borderRadius: 20,
-                paddingHorizontal: 20,
+                borderRadius: 12,
+                paddingHorizontal: 8,
                 paddingTop: 20,
                 paddingBottom: 16,
                 height: 420,
@@ -239,13 +239,12 @@ export default function DatePicker({
                 <View
                   style={{
                     flexDirection: "row",
+                    justifyContent: "center"
                   }}
                 >
                   <TouchableOpacity
                     onPress={goPreviousMonth}
                     style={{
-                      width: 44,
-                      height: 44,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
@@ -260,8 +259,6 @@ export default function DatePicker({
                   <TouchableOpacity
                     onPress={goNextMonth}
                     style={{
-                      width: 44,
-                      height: 44,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
@@ -349,7 +346,7 @@ export default function DatePicker({
                         style={({ pressed }) => ({
                           width: 40,
                           height: 40,
-                          borderRadius: 16,
+                          borderRadius: 999,
                           justifyContent: "center",
                           alignItems: "center",
 
@@ -425,8 +422,8 @@ export function TimePicker({
           style={{
             width: 360,
             backgroundColor: "#1c1c1e21",
-            borderRadius: 20,
-            paddingHorizontal: 20,
+            borderRadius: 12,
+            paddingHorizontal: 8,
             paddingTop: 20,
             paddingBottom: 16,
             height: 420,
