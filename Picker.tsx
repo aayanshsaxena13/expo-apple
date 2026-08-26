@@ -30,7 +30,7 @@ export default function Picker(props: {
                     margin: props.margin,
                     alignSelf: props.alignment,
                 }}>
-                    <GlassButton onPress={() => setVisible(true)}>
+                    <GlassButton variant="toolbar" onPress={() => setVisible(true)}>
                         <Ionicons name="chevron-expand-outline" size={32} />
                     </GlassButton>
 

@@ -46,6 +46,7 @@ export function GlassButton(props: {
     children?: JSX.Element;
     margin?: number;
     alignment?: FlexAlignType;
+    variant: "regular" | "toolbar";
 }) {
     const scale = useRef(new Animated.Value(1)).current;
 
@@ -66,7 +67,7 @@ export function GlassButton(props: {
 
     return (
         <>
-            {Platform.OS === "ios" &&
+            {Platform.OS === "ios" && props.variant === "regular" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
                 }}>
@@ -75,6 +76,22 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 12,
+                    }} glassEffectStyle={"regular"}>
+                        <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
+                            {props.children}
+                        </Pressable>
+                    </GlassView>
+                </Animated.View>
+            }
+            {Platform.OS === "ios" && props.variant === "toolbar" &&
+                <Animated.View style={{
+                    transform: [{ scale: scale }],
+                }}>
+                    <GlassView style={{
+                        padding: 8,
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        borderRadius: 999,
                     }} glassEffectStyle={"regular"}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
