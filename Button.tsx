@@ -2,6 +2,7 @@ import { FlexAlignType, Pressable, Animated, Platform } from "react-native";
 import { Paragraph } from "./RichText";
 import { JSX, useRef } from "react";
 import { GlassView } from "expo-glass-effect";
+import { BlurView } from "expo-blur";
 
 export function Button(props: {
     onPress?: () => void;
@@ -83,6 +84,22 @@ export function GlassButton(props: {
                     </GlassView>
                 </Animated.View>
             }
+            {Platform.OS !== "ios" && props.variant === "regular" &&
+                <Animated.View style={{
+                    transform: [{ scale: scale }],
+                }}>
+                    <BlurView intensity={16} style={{
+                        padding: 8,
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        borderRadius: 12,
+                    }}>
+                        <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
+                            {props.children}
+                        </Pressable>
+                    </BlurView>
+                </Animated.View>
+            }
             {Platform.OS === "ios" && props.variant === "toolbar" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
@@ -97,6 +114,22 @@ export function GlassButton(props: {
                             {props.children}
                         </Pressable>
                     </GlassView>
+                </Animated.View>
+            }
+            {Platform.OS !== "ios" && props.variant === "toolbar" &&
+                <Animated.View style={{
+                    transform: [{ scale: scale }],
+                }}>
+                    <BlurView style={{
+                        padding: 8,
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        borderRadius: 999,
+                    }} intensity={16}>
+                        <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
+                            {props.children}
+                        </Pressable>
+                    </BlurView>
                 </Animated.View>
             }
         </>

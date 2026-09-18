@@ -10,7 +10,7 @@ export function BouncyView(props: {
 
     useEffect(() => {
         const bounceAnim = Animated.timing(animatedY, {
-            toValue: dim.width < 450 ? -20 : -30,
+            toValue: dim.width < 450 ? -6 : -8,
             easing: Easing.inOut(Easing.quad),
             duration: 600,
             useNativeDriver: true,

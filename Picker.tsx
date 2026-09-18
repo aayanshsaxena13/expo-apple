@@ -25,7 +25,7 @@ export default function Picker(props: {
 
     return (
         <>
-            {Platform.OS === "ios" && props.variant === "menu" &&
+            {props.variant === "menu" &&
                 <View style={{
                     margin: props.margin,
                     alignSelf: props.alignment,

@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { GlassView } from "expo-glass-effect";
+import { BlurView } from "expo-blur";
 import { useEffect, useMemo, useState } from "react";
 import {
   Button,
@@ -184,20 +184,15 @@ export function DatePicker({
               alignItems: "center",
             }}
           >
-            <GlassView
+            <BlurView intensity={16}
               style={{
                 width: dim.width < 450 ? 280 : 320,
-                backgroundColor: "#1c1c1e21",
                 borderRadius: 12,
                 padding: 8,
                 height: 420,
-                shadowColor: "#000",
-                shadowOpacity: 0.12,
-                shadowRadius: 24,
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
+                shadowColor: "#ffffff",
+                shadowOpacity: 0.4,
+                shadowRadius: 12,
               }}
             >
               <View
@@ -371,7 +366,7 @@ export function DatePicker({
               </View>
 
               <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
-            </GlassView>
+            </BlurView>
           </SafeAreaView>
         </Modal>
       }
@@ -416,20 +411,15 @@ export function TimePicker({
           alignItems: "center",
         }}
       >
-        <GlassView
+        <BlurView intensity={16}
           style={{
             width: 360,
-            backgroundColor: "#1c1c1e21",
             borderRadius: 12,
             padding: 8,
             height: 420,
-            shadowColor: "#000",
-            shadowOpacity: 0.12,
-            shadowRadius: 24,
-            shadowOffset: {
-              width: 0,
-              height: 10,
-            },
+            shadowColor: "#ffffff",
+            shadowOpacity: 0.4,
+            shadowRadius: 12,
           }}
         >
           <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
@@ -438,7 +428,7 @@ export function TimePicker({
             <Picker wheelWidth={130} option={phase} variant="wheel" options={phases} setOption={(i) => setPhase(i)} />
           </View>
           <Button color={themes.red.primary} title="Done" onPress={() => setVisible(false)} />
-        </GlassView>
+        </BlurView>
       </SafeAreaView>
     </Modal>
   );
