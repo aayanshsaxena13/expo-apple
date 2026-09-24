@@ -1,6 +1,6 @@
 import { Dimensions, Pressable, View, Modal, Button } from "react-native";
 import { themes } from "./constants/themes";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 
 export default function ColorPicker({ setColor, visible, setVisible }: { setColor: (s: string) => void; visible?: boolean; setVisible: (b: boolean) => void; }) {
     const red: string[] = ["rgb(255, 160, 160)", themes.red.secondary, themes.red.primary, "rgb(133, 0, 0)"];
@@ -14,15 +14,14 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
     const dim = Dimensions.get("window");
     return (
         <>
-            <Modal visible={visible} transparent={true} animationType="fade">
+            <Modal visible={visible} transparent={true} animationType="slide">
                 <View style={{
                     flex: 1,
-                    justifyContent: "center",
+                    justifyContent: "flex-end",
                     alignItems: "center",
                 }}>
-                    <SafeAreaView style={{
+                    <BlurView intensity={32} style={{
                         margin: 20,
-                        backgroundColor: 'rgba(16, 16, 16, 0.95)',
                         borderRadius: 12,
                         padding: 8,
                         alignItems: 'center',
@@ -34,7 +33,8 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
                         shadowOpacity: 0.25,
                         shadowRadius: 12,
                         elevation: 4,
-                        width: 360,
+                        width: dim.width,
+                        height: "90%",
                     }}>
                         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                             <View style={{
@@ -136,7 +136,7 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
                             </View>
                         </View>
                         <Button title="Done" color={themes.red.primary} onPress={() => setVisible(false)} />
-                    </SafeAreaView>
+                    </BlurView>
                 </View>
             </Modal>
         </>
