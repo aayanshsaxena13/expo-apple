@@ -27,11 +27,13 @@ export default function Menu({
         <Modal visible={visible} transparent={true} animationType="fade">
             <SafeAreaView style={{
                 justifyContent: "center",
-                alignContent: "center",
+                alignItems: "center",
                 flex: 1
             }}>
                 <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                    {!isLoading ? <BlurView tint="dark" intensity={20}>
+                    {!isLoading ? <BlurView tint="dark" intensity={20} style={{
+                        width: "100%",
+                    }}>
                         <List data={options} renderItem={(i: string) => (
                             <Pressable style={({ pressed }) => [{
                                 backgroundColor: !pressed ? "transparent" : "rgba(255, 255, 255, 0.03)",
