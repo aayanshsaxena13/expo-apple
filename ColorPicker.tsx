@@ -1,6 +1,5 @@
 import { Dimensions, Pressable, View, Modal, Button } from "react-native";
 import { themes } from "./constants/themes";
-import { BlurView } from "expo-blur";
 
 export default function ColorPicker({ setColor, visible, setVisible }: { setColor: (s: string) => void; visible?: boolean; setVisible: (b: boolean) => void; }) {
     const red: string[] = ["rgb(255, 160, 160)", themes.red.secondary, themes.red.primary, "rgb(133, 0, 0)"];
@@ -14,129 +13,112 @@ export default function ColorPicker({ setColor, visible, setVisible }: { setColo
     const dim = Dimensions.get("window");
     return (
         <>
-            <Modal visible={visible} transparent={true} animationType="slide">
+            <Modal visible={visible} presentationStyle="formSheet" backdropColor={"rgba(16, 16, 16, 0.4)"} animationType="slide">
                 <View style={{
                     flex: 1,
                     justifyContent: "flex-end",
                     alignItems: "center",
                 }}>
-                    <BlurView intensity={32} style={{
-                        margin: 20,
-                        borderRadius: 12,
-                        padding: 8,
-                        alignItems: 'center',
-                        shadowColor: '#000',
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 12,
-                        elevation: 4,
-                        width: dim.width,
-                        height: "90%",
-                    }}>
-                        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {red.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {orange.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {yellow.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {green.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {blue.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {purple.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
-
-                            <View style={{
-                                flexDirection: "column-reverse",
-                                justifyContent: "center"
-                            }}>
-                                {dark.map((color: string, index: number) => (
-                                    <Pressable key={index} style={{
-                                        padding: 8,
-                                        backgroundColor: color,
-                                        width: dim.width < 450 ? 24 : 36,
-                                        height: dim.width < 450 ? 24 : 36
-                                    }} onPress={() => setColor(color)} />
-                                ))}
-                            </View>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {red.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
                         </View>
-                        <Button title="Done" color={themes.red.primary} onPress={() => setVisible(false)} />
-                    </BlurView>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {orange.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {yellow.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {green.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {blue.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {purple.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+
+                        <View style={{
+                            flexDirection: "column-reverse",
+                            justifyContent: "center"
+                        }}>
+                            {dark.map((color: string, index: number) => (
+                                <Pressable key={index} style={{
+                                    padding: 8,
+                                    backgroundColor: color,
+                                    width: dim.width < 450 ? 24 : 36,
+                                    height: dim.width < 450 ? 24 : 36
+                                }} onPress={() => setColor(color)} />
+                            ))}
+                        </View>
+                    </View>
+                    <Button title="Done" color={themes.red.primary} onPress={() => setVisible(false)} />
                 </View>
             </Modal>
         </>
