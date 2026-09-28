@@ -124,7 +124,7 @@ export function Stepper(props: {
       {props.label && <Paragraph margin={12} color={"white"}>{props.label}</Paragraph>}
       <View style={{
         flexDirection: "row",
-        margin: 12,
+        margin: 8,
       }}>
         <Pressable style={({ pressed }) => [{
           backgroundColor: !pressed ? "rgba(31, 31, 31, 0.5)" : "rgba(62, 62, 62, 0.5)",

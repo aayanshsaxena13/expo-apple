@@ -93,6 +93,7 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 12,
+                        overflow: 'hidden'
                     }}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
@@ -125,6 +126,7 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 999,
+                        overflow: 'hidden'
                     }} intensity={16}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}

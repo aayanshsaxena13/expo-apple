@@ -33,6 +33,7 @@ export default function Menu({
                 <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                     {!isLoading ? <BlurView tint="dark" intensity={20} style={{
                         width: "100%",
+                        overflow: 'hidden'
                     }}>
                         <List data={options} renderItem={(i: string) => (
                             <Pressable style={({ pressed }) => [{

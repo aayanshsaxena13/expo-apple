@@ -193,6 +193,7 @@ export function DatePicker({
                 shadowColor: "#ffffff",
                 shadowOpacity: 0.4,
                 shadowRadius: 12,
+                overflow: 'hidden'
               }}
             >
               <View
@@ -416,6 +417,7 @@ export function TimePicker({
             width: 360,
             borderRadius: 12,
             padding: 8,
+            overflow: 'hidden',
             height: 420,
             shadowColor: "#ffffff",
             shadowOpacity: 0.4,
