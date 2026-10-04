@@ -23,7 +23,6 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
         borderColor: "rgba(59, 59, 59, 0.5)",
         backgroundColor: "transparent",
         borderWidth: dim.width < 450 ? 1.6 : 3.2,
-        width: dim.width < 450 ? 280 : 320,
         fontSize: 16,
         overflow: "hidden",
         borderRadius: 12,
