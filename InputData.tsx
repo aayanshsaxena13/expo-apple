@@ -2,33 +2,65 @@ import { Ionicons } from "@expo/vector-icons";
 import NativeSlider from "@react-native-community/slider";
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
-import { Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
+import { Animated, Dimensions, FlexAlignType, Platform, Pressable, TextInput, View } from "react-native";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
+import { GlassView } from "expo-glass-effect";
+import { BlurView } from "expo-blur";
 
 const dim = Dimensions.get("window");
 
 export function TextField({ placeholder, alignment, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
   return (
-    <TextInput
-      placeholder={placeholder}
-      defaultValue={value}
-      onChangeText={onChange}
-      style={{
-        alignSelf: alignment,
-        color: color ? color : "white",
-        fontWeight: 700,
-        padding: 8,
-        margin: margin,
-        borderColor: "rgba(59, 59, 59, 0.5)",
-        backgroundColor: "transparent",
-        borderWidth: dim.width < 450 ? 1.6 : 3.2,
-        fontSize: 16,
-        overflow: "hidden",
-        borderRadius: 12,
-      }}
-      secureTextEntry={security}
-    />
+    <>
+      {Platform.OS === "ios" ?
+        <GlassView
+          glassEffectStyle={"clear"}
+          style={{
+            alignSelf: alignment,
+            margin,
+            padding: 8,
+            borderRadius: 12,
+          }}
+        >
+          <TextInput
+            placeholder={placeholder}
+            defaultValue={value}
+            onChangeText={onChange}
+            style={{
+              color: color ? color : "white",
+              fontWeight: 700,
+              fontSize: 16,
+              overflow: "hidden",
+            }}
+            secureTextEntry={security}
+          />
+        </GlassView> :
+        <BlurView
+          style={{
+            borderColor: "rgba(59, 59, 59, 0.5)",
+            borderWidth: dim.width < 450 ? 1.6 : 3.2,
+            margin,
+            padding: 8,
+            alignSelf: alignment,
+            borderRadius: 12,
+            overflow: "hidden"
+          }}>
+          <TextInput
+            placeholder={placeholder}
+            defaultValue={value}
+            onChangeText={onChange}
+            style={{
+              color: color ? color : "white",
+              fontWeight: 700,
+              fontSize: 16,
+              overflow: "hidden",
+            }}
+            secureTextEntry={security}
+          />
+        </BlurView>
+      }
+    </>
   );
 }
 
