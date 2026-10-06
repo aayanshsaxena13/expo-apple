@@ -1,8 +1,10 @@
-import { FlexAlignType, Pressable, Animated, Platform } from "react-native";
+import { FlexAlignType, Pressable, Animated, Platform, Dimensions } from "react-native";
 import { Paragraph } from "./RichText";
 import { JSX, useRef } from "react";
 import { GlassView } from "expo-glass-effect";
 import { BlurView } from "expo-blur";
+
+const dim = Dimensions.get("window");
 
 export function Button(props: {
     onPress?: () => void;
@@ -93,7 +95,9 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 12,
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        borderColor: 'rgba(59, 59, 59, 0.5)',
+                        borderWidth: dim.width < 450 ? 1.6 : 3.2
                     }}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
@@ -126,7 +130,9 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 999,
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        borderColor: 'rgba(59, 59, 59, 0.5)',
+                        borderWidth: dim.width < 450 ? 1.6 : 3.2
                     }} intensity={16}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}

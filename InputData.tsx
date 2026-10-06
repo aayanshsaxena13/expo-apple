@@ -37,6 +37,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
           />
         </GlassView> :
         <BlurView
+          intensity={16}
           style={{
             borderColor: "rgba(59, 59, 59, 0.5)",
             borderWidth: dim.width < 450 ? 1.6 : 3.2,
@@ -55,6 +56,8 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
               fontWeight: 700,
               fontSize: 16,
               overflow: "hidden",
+              padding: 0,
+              includeFontPadding: false
             }}
             secureTextEntry={security}
           />
