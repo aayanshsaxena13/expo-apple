@@ -7,6 +7,7 @@ import { GlassButton } from "./Button";
 import { themes } from "./constants/themes";
 import Menu from "./Menu";
 import { Paragraph } from "./RichText";
+import { BlurView } from "expo-blur";
 
 export default function Picker(props: {
     options: string[];
@@ -37,75 +38,143 @@ export default function Picker(props: {
                     <Menu options={props.options} visible={visible} setOption={props.setOption} setVisible={setVisible} />
                 </View>
             }
-            {Platform.OS === "ios" && props.variant === "segmented" &&
-                <GlassView style={{
-                    margin: props.margin,
-                    alignSelf: props.alignment,
-                    flexDirection: "row",
-                    width: 300,
-                    position: "relative",
-                    borderRadius: 999
-                }} glassEffectStyle={"regular"}>
-                    {/* Moment of truth list */}
-                    {props.options.map((val: string, i: number) => (
-                        <View key={i.toString()} style={{
-                            width: 300 / props.options.length,
-                            height: 36,
-                            padding: 4,
-                            zIndex: 1,
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}>
-                            <Pressable onPressIn={() => {
-                                Animated.sequence([
-                                    // Expansion...
-                                    Animated.timing(scale, {
-                                        toValue: 1.5,
-                                        duration: 100,
-                                        useNativeDriver: true,
-                                    }),
-                                    // Movement in parallel...
-                                    Animated.parallel([
-                                        Animated.spring(left, {
-                                            toValue: (300 / props.options.length) * i,
-                                            useNativeDriver: true,
-                                        }),
+            {props.variant === "segmented" && (
+                <>
+                    {Platform.OS === "ios" ? <GlassView style={{
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        flexDirection: "row",
+                        width: 300,
+                        position: "relative",
+                        borderRadius: 999
+                    }} glassEffectStyle={"regular"}>
+                        {/* Moment of truth list */}
+                        {props.options.map((val: string, i: number) => (
+                            <View key={i.toString()} style={{
+                                width: 300 / props.options.length,
+                                height: 36,
+                                padding: 4,
+                                zIndex: 1,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                                <Pressable onPressIn={() => {
+                                    Animated.sequence([
+                                        // Expansion...
                                         Animated.timing(scale, {
-                                            toValue: 1,
+                                            toValue: 1.5,
                                             duration: 100,
                                             useNativeDriver: true,
                                         }),
-                                    ]),
-                                    // The Playback of sequence...
-                                ]).start();
-                            }} onPressOut={() => props.setOption(val)}>
-                                <View style={{ height: 36, width: 300 / props.options.length, justifyContent: "center", alignItems: "center" }}>
-                                    <Paragraph color={props.option === val ? themes.blue.primary : "white"} alignment="center">{val}</Paragraph>
-                                </View>
-                            </Pressable>
-                        </View>
-                    ))}
+                                        // Movement in parallel...
+                                        Animated.parallel([
+                                            Animated.spring(left, {
+                                                toValue: (300 / props.options.length) * i,
+                                                useNativeDriver: true,
+                                            }),
+                                            Animated.timing(scale, {
+                                                toValue: 1,
+                                                duration: 100,
+                                                useNativeDriver: true,
+                                            }),
+                                        ]),
+                                        // The Playback of sequence...
+                                    ]).start();
+                                }} onPressOut={() => props.setOption(val)}>
+                                    <View style={{ height: 36, width: 300 / props.options.length, justifyContent: "center", alignItems: "center" }}>
+                                        <Paragraph color={props.option === val ? themes.blue.primary : "white"} alignment="center">{val}</Paragraph>
+                                    </View>
+                                </Pressable>
+                            </View>
+                        ))}
 
-                    {/* Glass pill selector */}
-                    <Animated.View style={{
-                        transform: [{ translateX: left }, { scale }],
-                        position: "absolute"
-                    }}>
-                        <GlassView
-                            glassEffectStyle={"clear"}
-                            style={{
+                        {/* Glass pill selector */}
+                        <Animated.View style={{
+                            transform: [{ translateX: left }, { scale }],
+                            position: "absolute"
+                        }}>
+                            <GlassView
+                                glassEffectStyle={"clear"}
+                                style={{
+                                    width: 300 / props.options.length,
+                                    borderRadius: 999,
+                                    height: 36,
+                                    padding: 4,
+                                }}
+                            />
+                        </Animated.View>
+                    </GlassView> : <BlurView style={{
+                        margin: props.margin,
+                        alignSelf: props.alignment,
+                        flexDirection: "row",
+                        width: 300,
+                        position: "relative",
+                        borderRadius: 999,
+                        overflow: "hidden"
+                    }} intensity={32}>
+                        {/* Moment of truth list */}
+                        {props.options.map((val: string, i: number) => (
+                            <View key={i.toString()} style={{
                                 width: 300 / props.options.length,
-                                borderRadius: 999,
                                 height: 36,
                                 padding: 4,
-                            }}
-                        />
-                    </Animated.View>
-                </GlassView>
+                                zIndex: 1,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                                <Pressable onPressIn={() => {
+                                    Animated.sequence([
+                                        // Expansion...
+                                        Animated.timing(scale, {
+                                            toValue: 1.5,
+                                            duration: 100,
+                                            useNativeDriver: true,
+                                        }),
+                                        // Movement in parallel...
+                                        Animated.parallel([
+                                            Animated.spring(left, {
+                                                toValue: (300 / props.options.length) * i,
+                                                useNativeDriver: true,
+                                            }),
+                                            Animated.timing(scale, {
+                                                toValue: 1,
+                                                duration: 100,
+                                                useNativeDriver: true,
+                                            }),
+                                        ]),
+                                        // The Playback of sequence...
+                                    ]).start();
+                                }} onPressOut={() => props.setOption(val)}>
+                                    <View style={{ height: 36, width: 300 / props.options.length, justifyContent: "center", alignItems: "center" }}>
+                                        <Paragraph color={props.option === val ? themes.blue.primary : "white"} alignment="center">{val}</Paragraph>
+                                    </View>
+                                </Pressable>
+                            </View>
+                        ))}
+
+                        {/* Glass pill selector */}
+                        <Animated.View style={{
+                            transform: [{ translateX: left }, { scale }],
+                            position: "absolute"
+                        }}>
+                            <BlurView
+                                intensity={16}
+                                style={{
+                                    width: 300 / props.options.length,
+                                    borderRadius: 999,
+                                    height: 36,
+                                    padding: 4,
+                                    overflow: "hidden"
+                                }}
+                            />
+                        </Animated.View>
+                    </BlurView>}
+                </>
+            )
             }
-            {Platform.OS === "ios" && props.variant === "wheel" && (
+            {props.variant === "wheel" && (
                 <>
-                    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    <View style={{ margin: props.margin, alignSelf: props.alignment }}>
                         <View
                             style={{
                                 position: "relative",
@@ -136,14 +205,23 @@ export default function Picker(props: {
                                 ))}
                             </ScrollView>
 
-                            <GlassView pointerEvents="none" style={{
+                            {Platform.OS === "ios" ? <GlassView pointerEvents="none" style={{
                                 position: "absolute",
                                 height: 36,
                                 width: wheelWidth,
                                 borderRadius: 999,
                                 top: (360 - 36) / 2,
                                 zIndex: -1,
-                            }} glassEffectStyle={"clear"} />
+                            }} glassEffectStyle={"clear"} /> :
+                                <BlurView pointerEvents="none" style={{
+                                    position: "absolute",
+                                    height: 36,
+                                    width: wheelWidth,
+                                    borderRadius: 999,
+                                    top: (360 - 36) / 2,
+                                    overflow: "hidden",
+                                    zIndex: -1,
+                                }} intensity={16} />}
                         </View>
                     </View>
                 </>

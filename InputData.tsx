@@ -120,7 +120,7 @@ export function Slider({
   min = 0,
   max = 100,
   step = 1,
-  width = 250,
+  width,
 }: {
   value?: number;
   onValueChange?: (i: number) => void;
