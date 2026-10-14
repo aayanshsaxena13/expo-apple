@@ -5,6 +5,7 @@ import { GlassView } from "expo-glass-effect";
 import { BlurView } from "expo-blur";
 
 const dim = Dimensions.get("window");
+const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
 
 export function Button(props: {
     onPress?: () => void;
@@ -70,7 +71,7 @@ export function GlassButton(props: {
 
     return (
         <>
-            {Platform.OS === "ios" && props.variant === "regular" &&
+            {supportsGlass && props.variant === "regular" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
                 }}>
@@ -86,7 +87,7 @@ export function GlassButton(props: {
                     </GlassView>
                 </Animated.View>
             }
-            {Platform.OS !== "ios" && props.variant === "regular" &&
+            {!supportsGlass && props.variant === "regular" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
                 }}>
@@ -105,7 +106,7 @@ export function GlassButton(props: {
                     </BlurView>
                 </Animated.View>
             }
-            {Platform.OS === "ios" && props.variant === "toolbar" &&
+            {supportsGlass && props.variant === "toolbar" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
                 }}>
@@ -121,7 +122,7 @@ export function GlassButton(props: {
                     </GlassView>
                 </Animated.View>
             }
-            {Platform.OS !== "ios" && props.variant === "toolbar" &&
+            {!supportsGlass && props.variant === "toolbar" &&
                 <Animated.View style={{
                     transform: [{ scale: scale }],
                 }}>
@@ -132,7 +133,7 @@ export function GlassButton(props: {
                         borderRadius: 999,
                         overflow: 'hidden',
                         borderColor: 'rgba(59, 59, 59, 0.5)',
-                        borderWidth: dim.width < 450 ? 1.6 : 3.2
+                        borderWidth: dim.width < 450 ? 1.6 : 3.2,
                     }} intensity={16}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}

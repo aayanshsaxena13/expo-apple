@@ -9,11 +9,12 @@ import { GlassView } from "expo-glass-effect";
 import { BlurView } from "expo-blur";
 
 const dim = Dimensions.get("window");
+const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
 
 export function TextField({ placeholder, alignment, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
   return (
     <>
-      {Platform.OS === "ios" ?
+      {supportsGlass ?
         <GlassView
           glassEffectStyle={"clear"}
           style={{

@@ -9,6 +9,8 @@ import Menu from "./Menu";
 import { Paragraph } from "./RichText";
 import { BlurView } from "expo-blur";
 
+const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
+
 export default function Picker(props: {
     options: string[];
     setOption: (i: string) => void;
@@ -40,7 +42,7 @@ export default function Picker(props: {
             }
             {props.variant === "segmented" && (
                 <>
-                    {Platform.OS === "ios" ? <GlassView style={{
+                    {supportsGlass ? <GlassView style={{
                         margin: props.margin,
                         alignSelf: props.alignment,
                         flexDirection: "row",
@@ -205,7 +207,7 @@ export default function Picker(props: {
                                 ))}
                             </ScrollView>
 
-                            {Platform.OS === "ios" ? <GlassView pointerEvents="none" style={{
+                            {supportsGlass ? <GlassView pointerEvents="none" style={{
                                 position: "absolute",
                                 height: 36,
                                 width: wheelWidth,
