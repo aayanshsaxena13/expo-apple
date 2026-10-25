@@ -11,7 +11,7 @@ import { BlurView } from "expo-blur";
 const dim = Dimensions.get("window");
 const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
 
-export function TextField({ placeholder, alignment, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
+export function TextField({ placeholder, alignment, width, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, width?: number, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
   return (
     <>
       {supportsGlass ?
@@ -33,6 +33,7 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
               fontWeight: 700,
               fontSize: 16,
               overflow: "hidden",
+              width
             }}
             secureTextEntry={security}
           />
@@ -58,7 +59,8 @@ export function TextField({ placeholder, alignment, color, security, value, onCh
               fontSize: 16,
               overflow: "hidden",
               padding: 0,
-              includeFontPadding: false
+              includeFontPadding: false,
+              width
             }}
             secureTextEntry={security}
           />
