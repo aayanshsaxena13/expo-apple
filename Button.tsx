@@ -51,6 +51,7 @@ export function GlassButton(props: {
     margin?: number;
     alignment?: FlexAlignType;
     variant: "regular" | "toolbar";
+    color?: string;
 }) {
     const scale = useRef(new Animated.Value(1)).current;
 
@@ -80,6 +81,7 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 12,
+                        backgroundColor: props?.color
                     }} glassEffectStyle={"regular"}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
@@ -98,7 +100,8 @@ export function GlassButton(props: {
                         borderRadius: 12,
                         overflow: 'hidden',
                         borderColor: 'rgba(59, 59, 59, 0.5)',
-                        borderWidth: dim.width < 450 ? 1.6 : 3.2
+                        borderWidth: dim.width < 450 ? 1.6 : 3.2,
+                        backgroundColor: props?.color
                     }}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
@@ -115,6 +118,7 @@ export function GlassButton(props: {
                         margin: props.margin,
                         alignSelf: props.alignment,
                         borderRadius: 999,
+                        backgroundColor: props?.color
                     }} glassEffectStyle={"regular"}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
@@ -134,6 +138,7 @@ export function GlassButton(props: {
                         overflow: 'hidden',
                         borderColor: 'rgba(59, 59, 59, 0.5)',
                         borderWidth: dim.width < 450 ? 1.6 : 3.2,
+                        backgroundColor: props?.color
                     }} intensity={16}>
                         <Pressable onLongPress={() => onLongPress.start()} onPressIn={() => onPressIn.start()} onPressOut={() => onPressOut.start()} onPress={props.onPress}>
                             {props.children}
