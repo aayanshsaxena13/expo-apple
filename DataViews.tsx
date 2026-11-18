@@ -1,4 +1,4 @@
-import { Dimensions, FlexAlignType, View, FlatList } from "react-native";
+import { Dimensions, FlexAlignType, View, FlatList, useColorScheme } from "react-native";
 import { ReactNode } from "react";
 import { Paragraph } from "./RichText";
 import { themes } from "./constants/themes";
@@ -15,6 +15,7 @@ const dim = Dimensions.get("window");
 
 export function List<ITEM extends Object>({ data, renderItem, alignment, margin, color }: ListProps<ITEM>) {
   if (!data) return;
+  const colorScheme = useColorScheme();
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
@@ -27,14 +28,14 @@ export function List<ITEM extends Object>({ data, renderItem, alignment, margin,
       renderItem={({ item, index }) => (
         <View
           style={{
-            backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
+            backgroundColor: color ?? colorScheme !== "light" ? "rgba(16, 16, 16, 0.9)" : "rgba(200, 200, 200, 0.9)",
             padding: 8,
             borderTopLeftRadius: index == 0 ? 12 : 0,
             borderTopRightRadius: index == 0 ? 12 : 0,
             borderBottomLeftRadius: index == data.length - 1 ? 12 : 0,
             borderBottomRightRadius: index == data.length - 1 ? 12 : 0,
             borderBottomWidth: index != data.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
-            borderColor: "rgb(134, 134, 134)",
+            borderColor: colorScheme !== "light" ? "rgb(134, 134, 134)" : "rgb(100, 100, 100)",
           }}
         >
           {renderItem?.(item)}
@@ -46,12 +47,13 @@ export function List<ITEM extends Object>({ data, renderItem, alignment, margin,
 export function Table<T extends Object>({ data, margin, alignment, color }: { data: T[], margin?: number, alignment?: FlexAlignType; color?: string; }) {
   if (data?.length === 0) return;
   const keys = Object.keys(data[0]);
+  const colorScheme = useColorScheme();
   return (
     <View style={{
       margin,
       alignSelf: alignment,
       flexDirection: "column",
-      backgroundColor: color ?? "rgba(16, 16, 16, 0.9)",
+      backgroundColor: color ?? colorScheme !== "light" ? "rgba(16, 16, 16, 0.9)" : "rgba(200, 200, 200, 0.9)",
       borderRadius: 12
     }}>
       <View style={{ flexDirection: "row" }}>
@@ -59,7 +61,7 @@ export function Table<T extends Object>({ data, margin, alignment, color }: { da
           <View style={{
             padding: 8,
             width: dim.width < 450 ? 100 : 120,
-            borderColor: "rgb(134, 134, 134)",
+            borderColor: colorScheme !== "light" ? "rgb(134, 134, 134)" : "rgb(100, 100, 100)",
             borderRightWidth: index !== keys.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
             borderBottomWidth: dim.width < 450 ? 1.6 : 3.2,
           }} key={index}>
@@ -77,7 +79,7 @@ export function Table<T extends Object>({ data, margin, alignment, color }: { da
                 <View style={{
                   padding: 8,
                   width: dim.width < 450 ? 100 : 120,
-                  borderColor: "rgb(134, 134, 134)",
+                  borderColor: colorScheme !== "light" ? "rgb(134, 134, 134)" : "rgb(100, 100, 100)",
                   borderBottomWidth: rowIndex !== data.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
                   borderRightWidth: index !== values.length - 1 ? dim.width < 450 ? 1.6 : 3.2 : 0,
                 }} key={index}>
