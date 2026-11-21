@@ -2,14 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import NativeSlider from "@react-native-community/slider";
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
-import { Animated, Dimensions, FlexAlignType, Platform, Pressable, TextInput, View } from "react-native";
+import { Animated, Dimensions, FlexAlignType, Pressable, TextInput, View } from "react-native";
 import { themes } from "./constants/themes";
 import { Paragraph } from "./RichText";
-import { GlassView } from "expo-glass-effect";
+import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import { BlurView } from "expo-blur";
 
 const dim = Dimensions.get("window");
-const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
+const supportsGlass = isLiquidGlassAvailable();
 
 export function TextField({ placeholder, alignment, width, color, security, value, onChange, margin }: { alignment?: FlexAlignType, color?: string, width?: number, security?: boolean, value?: string, onChange?: (i: string) => void, margin?: number, placeholder?: string }) {
   return (

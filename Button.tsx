@@ -1,11 +1,11 @@
-import { FlexAlignType, Pressable, Animated, Platform, Dimensions } from "react-native";
+import { FlexAlignType, Pressable, Animated, Dimensions } from "react-native";
 import { Paragraph } from "./RichText";
 import { JSX, useRef } from "react";
-import { GlassView } from "expo-glass-effect";
+import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import { BlurView } from "expo-blur";
 
 const dim = Dimensions.get("window");
-const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
+const supportsGlass = isLiquidGlassAvailable();
 
 export function Button(props: {
     onPress?: () => void;
@@ -56,17 +56,17 @@ export function GlassButton(props: {
     const scale = useRef(new Animated.Value(1)).current;
 
     const onPressIn = Animated.spring(scale, {
-        toValue: 0.8,
-        useNativeDriver: true,
-    });
-
-    const onPressOut = Animated.spring(scale, {
-        toValue: 1,
+        toValue: 1.2,
         useNativeDriver: true,
     });
 
     const onLongPress = Animated.spring(scale, {
         toValue: 1.2,
+        useNativeDriver: true,
+    });
+
+    const onPressOut = Animated.spring(scale, {
+        toValue: 1,
         useNativeDriver: true,
     });
 

@@ -1,15 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
-import { GlassView } from "expo-glass-effect";
+import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useRef, useState } from "react";
-import { Animated, FlexAlignType, Platform, Pressable, ScrollView, View } from "react-native";
+import { Animated, FlexAlignType, Pressable, ScrollView, View } from "react-native";
 import { GlassButton } from "./Button";
 import { themes } from "./constants/themes";
 import Menu from "./Menu";
 import { Paragraph } from "./RichText";
 import { BlurView } from "expo-blur";
 
-const supportsGlass = Platform.OS === "ios" && Number(Platform.Version) >= 26;
+const supportsGlass = isLiquidGlassAvailable();
 
 export default function Picker(props: {
     options: string[];
